@@ -1,0 +1,40 @@
+{
+  "name": "gid-lekol",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev":      "vite --host 0.0.0.0",
+    "build":    "vite build",
+    "preview":  "vite preview --host 0.0.0.0",
+    "test":              "vitest run",
+    "test:watch":        "vitest",
+    "test:coverage":     "vitest run --coverage",
+    "test:unit":         "vitest run src/tests/unit",
+    "test:components":   "vitest run src/tests/components",
+    "test:integration":  "vitest run src/tests/integration"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core":    "^6.0.0",
+    "react":              "^18.3.1",
+    "react-dom":          "^18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom":   "^6.4.2",
+    "@testing-library/react":      "^15.0.6",
+    "@testing-library/user-event": "^14.5.2",
+    "@vitejs/plugin-react":        "^4.2.1",
+    "@vitest/coverage-v8":         "^1.6.0",
+    "autoprefixer":                "^10.4.19",
+    "cross-fetch":                 "^4.0.0",
+    "fake-indexeddb":              "^5.0.2",
+    "jsdom":                       "^24.0.0",
+    "msw":                         "^2.3.0",
+    "postcss":                     "^8.4.38",
+    "tailwindcss":                 "^3.4.4",
+    "vite":                        "^5.2.12",
+    "vitest":                      "^1.6.0"
+  }
+  }
+
