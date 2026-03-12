@@ -1381,7 +1381,8 @@ function ChatScreen({ user, onNavigate }) {
             className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: "#1e3a8a" }}>
             <span>📷</span>
           </button>
-          <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImage} />
+          <input ref={fileRef} type="file" accept="image/*" onChange={handleImage}
+            style={{ position: "absolute", width: 0, height: 0, opacity: 0, pointerEvents: "none" }} />
           <textarea value={input} onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
             placeholder={remaining <= 0 ? "Limit jou a rive..." : "Poze yon kesyon oswa analize yon egzèsis..."}
