@@ -1198,8 +1198,9 @@ function ChatScreen({ user, onNavigate }) {
   const [image, setImage]       = useState(null);
   const [loading, setLoading]   = useState(false);
   const [scans, setScans]       = useState(user.scansToday || 0);
-  const [apiError, setApiError] = useState(null);   // ← erreur API structurée
-  const [lastPayload, setLastPayload] = useState(null); // ← pour le retry
+  const [apiError, setApiError] = useState(null);
+  const [lastPayload, setLastPayload] = useState(null);
+  const [activeSubject, setActiveSubject] = useState(user.subjects[0] || null);
   const bottomRef = useRef(null);
   const fileRef   = useRef(null);
 
@@ -1231,7 +1232,7 @@ function ChatScreen({ user, onNavigate }) {
     setLoading(true);
 
     try {
-      const detectedSubject = detectSubject(payload.currentInput);
+      const detectedSubject = activeSubject || detectSubject(payload.currentInput);
       const result = await callEdge({
         action: "ask",
         phone: user.phone,
@@ -1307,10 +1308,11 @@ function ChatScreen({ user, onNavigate }) {
       {/* Matières disponibles — bandeau compact */}
       <div className="px-4 py-1.5 flex gap-1.5 overflow-x-auto" style={{ background: "#080e22", borderBottom: "1px solid #ffffff08" }}>
         {user.subjects.map((s, i) => (
-          <span key={i} className="flex-shrink-0 px-2 py-0.5 rounded-full text-xs font-medium"
-            style={{ background: "#1e3a8a33", color: "#93c5fd", border: "1px solid #1e3a8a44" }}>
+          <button key={i} onClick={() => setActiveSubject(s)}
+            className="flex-shrink-0 px-2 py-0.5 rounded-full text-xs font-medium transition-all"
+            style={{ background: activeSubject === s ? "#1a4fd6" : "#1e3a8a33", color: activeSubject === s ? "#ffffff" : "#93c5fd", border: activeSubject === s ? "1px solid #3b82f6" : "1px solid #1e3a8a44" }}>
             {s}
-          </span>
+          </button>
         ))}
       </div>
 
