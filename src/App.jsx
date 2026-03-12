@@ -1411,6 +1411,16 @@ function QuizScreen({ user, onNavigate }) {
   const [openAnswer, setOpenAnswer] = useState("");
   const [aiCorrection, setAiCorrection] = useState("");
   const [loadingAI, setLoadingAI] = useState(false);
+  const [resultSaved, setResultSaved] = useState(false);
+
+  useEffect(() => {
+    if (phase === "result" && subject && !resultSaved) {
+      const questions = QUIZ_DATA[subject] || [];
+      const note20 = scoreToNote20(score, questions.length);
+      saveQuizGrade(user.phone, subject, note20, score, questions.length);
+      setResultSaved(true);
+    }
+  }, [phase]);
 
   // Filtrer les quiz selon les matières autorisées
   const availableSubjects = Object.keys(QUIZ_DATA).filter(s => user.subjects.includes(s));
