@@ -1390,7 +1390,7 @@ function ChatScreen({ user, onNavigate }) {
             className="flex-1 rounded-xl px-4 py-3 text-sm outline-none resize-none"
             style={{ background: "#ffffff0d", border: "1.5px solid #ffffff15", maxHeight: 80, color: "#e0e8ff" }}
           />
-          <button onClick={sendMessage} disabled={loading || remaining <= 0}
+          <button onClick={() => sendMessage()} disabled={loading || remaining <= 0}
             className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
             style={{ background: (loading || remaining <= 0) ? "#1a1a2e" : "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
             <span>✈</span>
