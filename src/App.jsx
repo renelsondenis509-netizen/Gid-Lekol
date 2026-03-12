@@ -1415,9 +1415,9 @@ function QuizScreen({ user, onNavigate }) {
 
   useEffect(() => {
     if (phase === "result" && subject && !resultSaved) {
-      const questions = QUIZ_DATA[subject] || [];
-      const note20 = scoreToNote20(score, questions.length);
-      saveQuizGrade(user.phone, subject, note20, score, questions.length);
+      const qs = QUIZ_DATA[subject] || [];
+      const note20 = scoreToNote20(score, qs.length);
+      saveQuizGrade(user.phone, subject, note20, score, qs.length);
       setResultSaved(true);
     }
   }, [phase]);
@@ -1616,11 +1616,6 @@ function QuizScreen({ user, onNavigate }) {
     const mention  = getMention(note20);
     const grades   = getQuizGrades(user.phone);
     const allGrades = getQuizGrades(user.phone); // toutes matières
-
-    // Sauvegarder la note si pas encore fait (éviter double save au re-render)
-    useEffect(() => {
-      saveQuizGrade(user.phone, subject, note20, score, questions.length);
-    }, []);
 
     // Historique de progression pour la matière actuelle
     const subjectHistory = (grades[subject] || []).slice(-6);
