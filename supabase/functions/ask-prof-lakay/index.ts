@@ -1,6 +1,6 @@
 // supabase/functions/ask-prof-lakay/index.ts
 // ─────────────────────────────────────────────────────────────────────────────
-// Edge Function Supabase — Gid Lekòl
+// Edge Function Supabase — Gid NS4
 // Déploiement : supabase functions deploy ask-prof-lakay
 // ─────────────────────────────────────────────────────────────────────────────
 
