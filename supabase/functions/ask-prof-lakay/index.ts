@@ -53,6 +53,23 @@ function getMention(note20: number): string {
   return "Insuffisant";
 }
 
+// ─── Masquer numéro de téléphone ─────────────────────────────────────────────
+function maskPhone(phone: string): string {
+  if (phone.length <= 6) return "***";
+  const start = phone.slice(0, 3);
+  const end   = phone.slice(-4);
+  return `${start}***${end}`;
+}
+
+// ─── Numéro de semaine (ex: "2025-W22") ──────────────────────────────────────
+function getWeekKey(): string {
+  const now  = new Date();
+  const year = now.getFullYear();
+  const start = new Date(year, 0, 1);
+  const week  = Math.ceil(((now.getTime() - start.getTime()) / 86400000 + start.getDay() + 1) / 7);
+  return `${year}-W${String(week).padStart(2, "0")}`;
+}
+
 // ─── ACTION : validate_code ───────────────────────────────────────────────────
 export async function validateCode(
   db: ReturnType<typeof createClient>,
@@ -60,7 +77,6 @@ export async function validateCode(
 ) {
   const { phone, schoolCode } = body;
 
-  // Chercher le code dans la table schools
   const { data: school, error } = await db
     .from("schools")
     .select("*")
@@ -71,32 +87,27 @@ export async function validateCode(
     return { valid: false, reason: "Kòd la pa valid." };
   }
 
-  // Vérifier statut actif
   if (!school.active) {
     return { valid: false, reason: "Kòd sa a dezaktive. Kontakte direksyon lekòl ou." };
   }
 
-  // Vérifier expiration
-  const now = new Date();
+  const now     = new Date();
   const expires = new Date(school.expires_at);
   if (now > expires) {
     const days = Math.floor((now.getTime() - expires.getTime()) / 86400000);
     return { valid: false, reason: `Kòd ou a ekspire depi ${days} jou.` };
   }
 
-  // Vérifier date de début
   const starts = new Date(school.starts_at);
   if (now < starts) {
     return { valid: false, reason: "Kòd sa a poko aktif. Kontakte lekòl ou." };
   }
 
-  // Compter élèves inscrits
   const { count: studentCount } = await db
     .from("profiles")
     .select("*", { count: "exact", head: true })
     .eq("school_code", schoolCode);
 
-  // Vérifier si cet élève est déjà inscrit
   const { data: existingProfile } = await db
     .from("profiles")
     .select("id")
@@ -108,13 +119,11 @@ export async function validateCode(
     return { valid: false, reason: `Limit ${school.max_students} elèv rive pou kòd sa a.` };
   }
 
-  // Upsert profil élève
   await db.from("profiles").upsert(
     { phone, school_code: schoolCode, last_seen: new Date().toISOString() },
     { onConflict: "phone,school_code" }
   );
 
-  // Scans utilisés aujourd'hui
   const today = new Date().toISOString().split("T")[0];
   const { count: scansToday } = await db
     .from("scans")
@@ -154,7 +163,6 @@ export async function processAsk(
 ) {
   const { phone, schoolCode, message, subject, imageBase64, history } = body;
 
-  // Vérifier que l'école autorise cette matière
   const { data: school } = await db
     .from("schools")
     .select("subjects, daily_scans, active, expires_at")
@@ -177,7 +185,6 @@ export async function processAsk(
     };
   }
 
-  // Vérifier quota journalier
   const today = new Date().toISOString().split("T")[0];
   const { count: scansToday } = await db
     .from("scans")
@@ -195,7 +202,6 @@ export async function processAsk(
     };
   }
 
-  // Construire le prompt Prof Lakay
   const systemPrompt = `Tu es Prof Lakay, un professeur haïtien bienveillant et expert pour les élèves de NS4 (Bac haïtien).
 Tu réponds en français avec quelques mots créoles naturels (bonjou, dakò, ale, anpil...).
 Tu es pédagogique : tu expliques étape par étape, tu encourages, tu cites les formules importantes.
@@ -214,7 +220,6 @@ Sois concis et va à l'essentiel — les élèves lisent sur téléphone.`;
 
   const reply = await gemini(fullPrompt, imageBase64);
 
-  // Sauvegarder le scan
   await db.from("scans").insert({
     phone,
     school_code:  schoolCode,
@@ -227,6 +232,97 @@ Sois concis et va à l'essentiel — les élèves lisent sur téléphone.`;
     reply,
     scansUsed:  (scansToday ?? 0) + 1,
     dailyLimit,
+  };
+}
+
+// ─── ACTION : save_quiz_score ─────────────────────────────────────────────────
+// Sauvegarde le score d'un quiz dans Supabase pour le leaderboard
+export async function saveQuizScore(
+  db: ReturnType<typeof createClient>,
+  body: {
+    phone: string;
+    schoolCode: string;
+    subject: string;
+    score: number;
+    total: number;
+    note20: number;
+    streak: number;
+  }
+) {
+  const { phone, schoolCode, subject, score, total, note20, streak } = body;
+
+  await db.from("quiz_scores").insert({
+    phone,
+    school_code: schoolCode,
+    subject,
+    score,
+    total,
+    note20,
+    streak,
+    week: getWeekKey(),
+    created_at: new Date().toISOString(),
+  });
+
+  return { saved: true };
+}
+
+// ─── ACTION : get_leaderboard ─────────────────────────────────────────────────
+// Retourne les 3 classements pour une école donnée
+export async function getLeaderboard(
+  db: ReturnType<typeof createClient>,
+  body: { schoolCode: string; phone: string }
+) {
+  const { schoolCode, phone } = body;
+
+  // ── 1. Meilleure note /20 par élève (max de toutes ses notes) ──
+  const { data: allScores } = await db
+    .from("quiz_scores")
+    .select("phone, note20, score, total, subject")
+    .eq("school_code", schoolCode);
+
+  // ── 2. Total bonnes réponses par élève ──
+  const totalCorrectMap: Record<string, number> = {};
+  const bestNoteMap: Record<string, number>     = {};
+
+  (allScores ?? []).forEach((row: { phone: string; note20: number; score: number }) => {
+    // Meilleure note
+    if (!bestNoteMap[row.phone] || row.note20 > bestNoteMap[row.phone]) {
+      bestNoteMap[row.phone] = row.note20;
+    }
+    // Total correct
+    totalCorrectMap[row.phone] = (totalCorrectMap[row.phone] ?? 0) + row.score;
+  });
+
+  // ── 3. Points cette semaine ──
+  const currentWeek = getWeekKey();
+  const { data: weekScores } = await db
+    .from("quiz_scores")
+    .select("phone, score")
+    .eq("school_code", schoolCode)
+    .eq("week", currentWeek);
+
+  const weekMap: Record<string, number> = {};
+  (weekScores ?? []).forEach((row: { phone: string; score: number }) => {
+    weekMap[row.phone] = (weekMap[row.phone] ?? 0) + row.score;
+  });
+
+  // ── Formater et trier les classements ──
+  const formatBoard = (map: Record<string, number>, myPhone: string) =>
+    Object.entries(map)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([p, val], i) => ({
+        rank:     i + 1,
+        phone:    maskPhone(p),
+        isMe:     p === myPhone,
+        value:    val,
+      }));
+
+  return {
+    bestNote:     formatBoard(bestNoteMap,     phone),
+    totalCorrect: formatBoard(totalCorrectMap, phone),
+    thisWeek:     formatBoard(weekMap,         phone),
+    currentWeek,
   };
 }
 
@@ -261,23 +357,22 @@ export async function processDashboard(
     db.from("scans").select("subject").eq("school_code", schoolCode),
   ]);
 
-  // Calculer la répartition par matière
   const subjectBreakdown: Record<string, number> = {};
   (subjectData ?? []).forEach((s: { subject: string }) => {
     subjectBreakdown[s.subject] = (subjectBreakdown[s.subject] ?? 0) + 1;
   });
 
-  const expires   = new Date(school.expires_at);
-  const daysLeft  = Math.ceil((expires.getTime() - Date.now()) / 86400000);
+  const expires  = new Date(school.expires_at);
+  const daysLeft = Math.ceil((expires.getTime() - Date.now()) / 86400000);
 
   return {
     school: {
-      name:         school.school_name,
-      subjects:     school.subjects ?? [],
-      dailyScans:   school.daily_scans,
+      name:          school.school_name,
+      subjects:      school.subjects ?? [],
+      dailyScans:    school.daily_scans,
       daysRemaining: daysLeft,
-      maxStudents:  school.max_students,
-      expiresAt:    school.expires_at,
+      maxStudents:   school.max_students,
+      expiresAt:     school.expires_at,
     },
     stats: {
       totalStudents:    totalStudents    ?? 0,
@@ -320,6 +415,12 @@ Deno.serve(async (req) => {
         break;
       case "ask":
         result = await processAsk(supabase, callGemini, body);
+        break;
+      case "save_quiz_score":
+        result = await saveQuizScore(supabase, body);
+        break;
+      case "get_leaderboard":
+        result = await getLeaderboard(supabase, body);
         break;
       case "dashboard":
         result = await processDashboard(supabase, body);
