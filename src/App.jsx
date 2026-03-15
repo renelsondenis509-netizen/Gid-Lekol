@@ -657,6 +657,7 @@ function QuizScreen({ user, onNavigate }) {
   const [maxStreak, setMaxStreak]   = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [shaking, setShaking]       = useState(false);
+  const [round, setRound]           = useState(1);
   const [openQ, setOpenQ]           = useState("");
   const [openAnswer, setOpenAnswer] = useState("");
   const [aiCorrection, setAiCorrection] = useState("");
@@ -671,7 +672,7 @@ function QuizScreen({ user, onNavigate }) {
     setPhase("qcm");
     setQIndex(0); setScore(0); setTotalAnswered(0);
     setHearts(3); setStreak(0); setMaxStreak(0);
-    setWrongAnswers([]); setSelected(null);
+    setWrongAnswers([]); setSelected(null); setRound(1);
   };
 
   const saveScoreToSupabase = async (finalScore, finalTotal, finalStreak) => {
@@ -744,8 +745,15 @@ function QuizScreen({ user, onNavigate }) {
     }
     const next = qIndex + 1;
     if (next >= shuffledQs.length) {
-      setShuffledQs(shuffleArray(QUIZ_DATA[subject]));
+      // Nouveau round — mélange différent garanti
+      let newShuffled = shuffleArray(QUIZ_DATA[subject]);
+      // Éviter que la 1ère question du nouveau round = dernière du précédent
+      if (newShuffled[0].q === shuffledQs[shuffledQs.length - 1].q) {
+        newShuffled = shuffleArray(QUIZ_DATA[subject]);
+      }
+      setShuffledQs(newShuffled);
       setQIndex(0);
+      setRound(r => r + 1);
     } else {
       setQIndex(next);
     }
@@ -898,7 +906,7 @@ function QuizScreen({ user, onNavigate }) {
         </div>
         {/* Score compact */}
         <div className="flex items-center justify-between">
-          <span className="text-blue-500 text-xs">{totalAnswered} kesyon reponn</span>
+          <span className="text-blue-500 text-xs">Wònn {round} • {totalAnswered} kesyon</span>
           <span className="text-green-400 text-xs font-bold">{score} ✅</span>
         </div>
         {/* Barre de progression de la session (score/total) */}
