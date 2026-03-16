@@ -67,93 +67,7 @@ function ErrorToast({ error, onRetry, onDismiss }) {
   );
 }
 
-// ─── QUIZ DATA — ALIGNÉ AU CURRICULUM MENFP NS4 HAÏTI ────────────────────────
-const QUIZ_DATA = {
-  "Biologie": [
-    { q: "Lors de la méiose, le nombre de chromosomes est :", choices: ["Doublé","Maintenu identique","Réduit de moitié","Multiplié par 4"], answer: 2, note: "La méiose produit 4 cellules haploïdes (n) à partir d'une cellule diploïde (2n)." },
-    { q: "Selon la 1ère loi de Mendel, lors d'un croisement Aa × Aa, quelle est la proportion du phénotype dominant ?", choices: ["1/4","1/2","3/4","4/4"], answer: 2, note: "Le croisement Aa×Aa donne : 1 AA + 2 Aa + 1 aa → 3/4 phénotype dominant." },
-    { q: "La respiration cellulaire se déroule principalement dans :", choices: ["Le noyau","Le ribosome","La mitochondrie","Le chloroplaste"], answer: 2, note: "La mitochondrie est le siège de la respiration aérobie (cycle de Krebs + phosphorylation oxydative)." },
-    { q: "L'équation bilan de la photosynthèse est :", choices: ["6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂","C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O","6O₂ + 6H₂O → C₆H₁₂O₆ + 6CO₂","CO₂ + H₂O → CH₂O + O₂"], answer: 0, note: "La photosynthèse : 6CO₂ + 6H₂O + lumière → C₆H₁₂O₆ + 6O₂" },
-    { q: "Un individu hémophile a un génotype :", choices: ["XH Xh (femme)","Xh Y (homme)","XH XH (femme)","XH Y (homme)"], answer: 1, note: "L'hémophilie est liée au chromosome X. Un homme Xh Y exprime toujours la maladie (hémizygote)." },
-    { q: "La mitose aboutit à :", choices: ["2 cellules haploïdes génétiquement différentes","4 cellules haploïdes identiques","2 cellules diploïdes génétiquement identiques à la cellule mère","4 cellules diploïdes différentes"], answer: 2, note: "La mitose assure la reproduction conforme : 2 cellules filles 2n = 2n mère." },
-    { q: "Le neurone transmet l'influx nerveux grâce à :", choices: ["Les ribosomes","Les synapses et neuromédiateurs","Les mitochondries","Les chromosomes"], answer: 1, note: "À la synapse, un neuromédiateur (ex: acétylcholine) assure la transmission de l'influx." },
-    { q: "La théorie de l'évolution de Darwin repose principalement sur :", choices: ["La transmission des caractères acquis","La sélection naturelle et la variation héréditaire","La création spontanée des espèces","Les mutations uniquement"], answer: 1, note: "Darwin : variation + hérédité + sélection naturelle = évolution des espèces par adaptation." },
-    { q: "Le brassage génétique lors de la méiose se produit grâce à :", choices: ["La réplication de l'ADN uniquement","Le crossing-over et la ségrégation indépendante","La traduction des protéines","La mitose des cellules germinales"], answer: 1, note: "Le crossing-over en prophase I et la disjonction aléatoire en métaphase I créent la diversité génétique." },
-    { q: "Quelle structure protège l'ADN dans la cellule eucaryote ?", choices: ["La membrane plasmique","La paroi cellulaire","L'enveloppe nucléaire","Le réticulum endoplasmique"], answer: 2, note: "Dans la cellule eucaryote, l'ADN est enfermé dans le noyau entouré d'une double membrane : l'enveloppe nucléaire." },
-  ],
-  "Physique": [
-    { q: "Le 2ème principe de Newton s'écrit :", choices: ["F = mv","F = ma","F = m/a","F = m²a"], answer: 1, note: "ΣF = ma : la somme des forces appliquées à un objet est égale à sa masse multipliée par son accélération." },
-    { q: "Un corps en chute libre depuis le repos parcourt en 2 secondes (g = 10 m/s²) :", choices: ["10 m","20 m","40 m","5 m"], answer: 1, note: "h = ½gt² = ½ × 10 × 4 = 20 m" },
-    { q: "La loi de gravitation universelle de Newton s'exprime par :", choices: ["F = G·m₁·m₂·d²","F = G·m₁·m₂ / d²","F = G·(m₁+m₂) / d","F = G·m₁ / (m₂·d)"], answer: 1, note: "F = G·m₁·m₂/d² où G = 6,67×10⁻¹¹ N·m²/kg²." },
-    { q: "Dans un circuit série, la résistance équivalente est :", choices: ["R_éq = R₁ × R₂","R_éq = R₁ + R₂","1/R_éq = 1/R₁ + 1/R₂","R_éq = R₁ - R₂"], answer: 1, note: "En série, les résistances s'additionnent : R_éq = R₁ + R₂ + ... + Rₙ" },
-    { q: "La loi de Snell-Descartes (réfraction) s'écrit :", choices: ["n₁·cos θ₁ = n₂·cos θ₂","n₁·sin θ₁ = n₂·sin θ₂","n₁/sin θ₁ = n₂/sin θ₂","n₁·tan θ₁ = n₂·tan θ₂"], answer: 1, note: "Réfraction : n₁ sin θ₁ = n₂ sin θ₂. La lumière se réfracte en passant d'un milieu à un autre." },
-    { q: "L'énergie cinétique d'un objet de masse m à la vitesse v est :", choices: ["Ec = mv","Ec = mv²","Ec = ½mv²","Ec = ½mv"], answer: 2, note: "Ec = ½mv² (en Joules)." },
-    { q: "La dilatation thermique linéaire d'un solide est donnée par :", choices: ["ΔL = L₀·α·ΔT²","ΔL = L₀·α·ΔT","ΔL = L₀ / (α·ΔT)","ΔL = α / (L₀·ΔT)"], answer: 1, note: "ΔL = L₀·α·ΔT où α est le coefficient de dilatation linéaire." },
-    { q: "La fréquence f et la période T sont liées par :", choices: ["f = T","f = T²","f = 1/T","f = 2πT"], answer: 2, note: "f = 1/T (Hz = 1/s). Si T = 0,5 s, alors f = 2 Hz." },
-    { q: "Le principe de conservation de l'énergie mécanique s'applique quand :", choices: ["Il y a des forces de frottement","Les forces extérieures non conservatives sont nulles","La vitesse est constante","La masse varie"], answer: 1, note: "Em = Ec + Ep = constante uniquement en l'absence de forces dissipatives." },
-    { q: "L'énergie stockée dans un condensateur de capacité C sous tension U est :", choices: ["E = CU","E = ½CU²","E = C²U","E = CU²"], answer: 1, note: "E = ½CU² (en Joules)." },
-  ],
-  "Chimie": [
-    { q: "L'atome de carbone (Z=6) possède dans son état fondamental :", choices: ["2 électrons sur la couche L","4 électrons de valence sur la couche L","6 électrons sur la couche K uniquement","3 électrons de valence"], answer: 1, note: "Carbone Z=6 : configuration K²L⁴ — 4 électrons de valence, d'où sa tétravalence." },
-    { q: "Pour équilibrer : Fe + O₂ → Fe₂O₃, les coefficients sont :", choices: ["2, 1, 1","4, 3, 2","1, 1, 2","3, 2, 1"], answer: 1, note: "4Fe + 3O₂ → 2Fe₂O₃ (Fe: 4=4 ✓, O: 6=6 ✓)" },
-    { q: "La concentration molaire C d'une solution est :", choices: ["C = n × V","C = n / V","C = V / n","C = m / V"], answer: 1, note: "C = n/V (mol/L) où n = moles de soluté, V = volume en litres." },
-    { q: "La réaction entre HCl et NaOH donne :", choices: ["NaCl + H₂O₂","NaCl + H₂O","NaOH + Cl₂","Na₂O + HCl"], answer: 1, note: "HCl + NaOH → NaCl + H₂O. Neutralisation : acide + base → sel + eau." },
-    { q: "Dans une réaction d'oxydoréduction, l'oxydant :", choices: ["Perd des électrons","Gagne des électrons","Perd des protons","Gagne des protons"], answer: 1, note: "Oxydant = accepteur d'électrons (il se réduit). Mnémotechnique : OILRIG." },
-    { q: "La formule générale des alcanes est :", choices: ["CₙH₂ₙ","CₙH₂ₙ₊₂","CₙH₂ₙ₋₂","CₙHₙ"], answer: 1, note: "Alcanes (hydrocarbures saturés) : CₙH₂ₙ₊₂. Ex : méthane CH₄ (n=1)." },
-    { q: "Le pH d'une solution d'HCl à 0,01 mol/L est :", choices: ["1","2","7","12"], answer: 1, note: "HCl est un acide fort : [H⁺] = 10⁻² mol/L → pH = 2" },
-    { q: "La liaison covalente est formée par :", choices: ["Transfert d'électrons entre deux atomes","Mise en commun d'une paire d'électrons entre deux atomes","Attraction électrostatique entre ions","Partage de protons entre atomes"], answer: 1, note: "La liaison covalente = partage d'électrons (≠ liaison ionique = transfert d'électrons)." },
-    { q: "La règle de l'octet stipule que les atomes tendent à :", choices: ["Posséder 8 protons","Avoir 8 électrons sur leur couche externe","Former 8 liaisons","Contenir 8 neutrons"], answer: 1, note: "Les atomes cherchent à compléter leur couche externe à 8 électrons pour être stables." },
-    { q: "La fonction ester est caractérisée par le groupe :", choices: ["-OH","-COOH","-COO-","-CHO"], answer: 2, note: "Ester : -COO- (ex: CH₃COOC₂H₅). Formé par réaction acide carboxylique + alcool." },
-  ],
-  "Philosophie": [
-    { q: "Le syllogisme est un raisonnement composé de :", choices: ["Une prémisse et une conclusion","Deux prémisses et une conclusion","Trois prémisses et deux conclusions","Une hypothèse et une thèse"], answer: 1, note: "Ex : Tous les hommes sont mortels (P1) + Socrate est un homme (P2) → Socrate est mortel (C)." },
-    { q: "Pour Descartes, le fondement indubitable de toute connaissance est :", choices: ["L'expérience sensible","La révélation divine","Le cogito : 'Je pense, donc je suis'","L'autorité des anciens"], answer: 2, note: "Dans les Méditations (1641), Descartes : cogito ergo sum." },
-    { q: "La théorie du contrat social de Rousseau affirme que :", choices: ["L'État est naturel et antérieur aux hommes","La société est fondée sur un accord entre les hommes pour garantir la liberté collective","Le roi détient son pouvoir de Dieu","La guerre est l'état naturel de l'homme"], answer: 1, note: "Pour Rousseau (Du Contrat Social, 1762), les hommes cèdent leur liberté naturelle à la volonté générale." },
-    { q: "L'impératif catégorique de Kant signifie :", choices: ["Agir selon son intérêt personnel","Agir selon des règles qui pourraient devenir une loi universelle","Obéir aux lois de l'État","Suivre les conseils des sages"], answer: 1, note: "Kant : agis seulement selon la maxime qui pourrait devenir une loi universelle." },
-    { q: "Anténor Firmin, philosophe haïtien, est l'auteur de :", choices: ["Gouverneurs de la Rosée","De l'égalité des races humaines (1885)","Ainsi parla Zarathoustra","L'Être et le Néant"], answer: 1, note: "Firmin (1850-1911) a réfuté le racisme scientifique de Gobineau — précurseur de la négritude." },
-    { q: "L'existentialisme de Sartre se résume par :", choices: ["L'essence précède l'existence","L'existence précède l'essence","L'existence et l'essence sont simultanées","L'essence est indépendante de l'existence"], answer: 1, note: "Sartre : l'homme existe d'abord, puis se définit par ses actes. Il est 'condamné à être libre'." },
-    { q: "La méthode dialectique de Hegel fonctionne selon le schéma :", choices: ["Hypothèse → Vérification → Conclusion","Thèse → Antithèse → Synthèse","Observation → Induction → Loi","Intuition → Déduction → Vérité"], answer: 1, note: "La dialectique hégélienne : thèse + antithèse → dépassement (synthèse)." },
-    { q: "Selon Platon, la caverne représente :", choices: ["La puissance de l'État","L'ignorance humaine et le chemin vers la vérité par la philosophie","La supériorité des sens sur la raison","Le bonheur dans la vie matérielle"], answer: 1, note: "République Livre VII : les prisonniers prennent des ombres pour la réalité. Le philosophe sort et découvre les Idées." },
-    { q: "Thomas Hobbes décrit l'état de nature comme :", choices: ["Un paradis de liberté et de paix","Une guerre de tous contre tous (bellum omnium contra omnes)","Un état de coopération naturelle","Une communauté harmonieuse"], answer: 1, note: "Dans Léviathan (1651) : sans État, la vie humaine est 'solitaire, pauvre, méchante, brutale et courte'." },
-    { q: "La logique formelle distingue vrai/faux selon :", choices: ["Le principe de causalité","Le principe de bivalence (vrai ou faux)","Le principe de relativité","Le principe de plaisir"], answer: 1, note: "En logique classique (Aristote), toute proposition est soit vraie, soit fausse : principe du tiers exclu." },
-  ],
-  "Sciences Sociales": [
-    { q: "L'indépendance d'Haïti fut proclamée le :", choices: ["18 novembre 1803","1er janvier 1804","14 août 1791","1er juillet 1801"], answer: 1, note: "L'indépendance d'Haïti fut proclamée le 1er janvier 1804 à Gonaïves par Jean-Jacques Dessalines." },
-    { q: "La bataille de Vertières (18 novembre 1803) a opposé :", choices: ["Les Haïtiens aux Espagnols","Les Haïtiens aux forces coloniales françaises de Rochambeau","Toussaint Louverture aux Anglais","Alexandre Pétion aux forces américaines"], answer: 1, note: "Vertières : victoire décisive de Dessalines sur l'armée française, ouvrant la voie à l'indépendance." },
-    { q: "La Constitution haïtienne de 1987 définit Haïti comme :", choices: ["Une monarchie constitutionnelle","Une République indivisible, souveraine, indépendante, coopératiste, libre, démocratique et sociale","Une fédération d'États autonomes","Un État théocratique"], answer: 1, note: "Art. 1 de la Constitution haïtienne de 1987." },
-    { q: "L'inflation est définie comme :", choices: ["Une baisse générale et durable des prix","Une hausse générale et durable du niveau des prix","Une augmentation de la production nationale","Une réduction du taux de chômage"], answer: 1, note: "L'inflation réduit le pouvoir d'achat." },
-    { q: "Le département de l'Ouest d'Haïti a pour chef-lieu :", choices: ["Cap-Haïtien","Les Cayes","Port-au-Prince","Jacmel"], answer: 2, note: "Port-au-Prince est le chef-lieu du département de l'Ouest et la capitale de la République d'Haïti." },
-    { q: "La Déclaration universelle des droits de l'homme a été adoptée en :", choices: ["1945","1948","1960","1789"], answer: 1, note: "La DUDH fut adoptée le 10 décembre 1948 par l'Assemblée générale de l'ONU à Paris." },
-    { q: "Le Produit Intérieur Brut (PIB) mesure :", choices: ["La richesse des ménages uniquement","La valeur totale des biens et services produits dans un pays sur une période donnée","Les exportations moins les importations","Le niveau de vie moyen de la population"], answer: 1, note: "PIB = C + I + G + (X-M)." },
-    { q: "Toussaint Louverture a rédigé en 1801 :", choices: ["La Constitution de 1804","La première Constitution haïtienne qui le nommait Gouverneur à vie","La Déclaration de l'indépendance","Le traité de paix avec la France"], answer: 1, note: "En 1801, Toussaint promulgue une Constitution autonomiste et se nomme Gouverneur à vie." },
-    { q: "La CARICOM a été fondée en :", choices: ["1958","1973","1804","1991"], answer: 1, note: "La CARICOM fut fondée en 1973 par le Traité de Chaguaramas. Haïti en est membre depuis 2002." },
-    { q: "En sociologie, la socialisation primaire désigne :", choices: ["L'intégration professionnelle de l'adulte","L'apprentissage des normes et valeurs dans la famille et l'école durant l'enfance","L'adaptation à la vie politique","La participation aux associations"], answer: 1, note: "La socialisation primaire : l'enfant intègre les normes sociales par la famille, l'école, les pairs." },
-  ],
-  "Littérature Haïtienne": [
-    { q: "Dans 'Gouverneurs de la Rosée' de Jacques Roumain, Manuel revient pour :", choices: ["Rejoindre l'armée haïtienne","Trouver de l'eau et réconcilier les familles divisées","Venger la mort de son père","S'enrichir grâce à la politique"], answer: 1, note: "Manuel revient de Cuba pour trouver une source d'eau et réconcilier les Bienaimé et Dorisca." },
-    { q: "L'Indigénisme haïtien (années 1920-1940) prône :", choices: ["L'imitation de la culture française","La valorisation des racines africaines, du vaudou et de la culture paysanne haïtienne","L'adoption de la culture américaine","Le rejet de toute tradition culturelle"], answer: 1, note: "L'Indigénisme (Carl Brouard, Émile Roumer, Jacques Roumain) : revalorisation des cultures africaines et autochtones." },
-    { q: "Oswald Durand est l'auteur du célèbre poème créole :", choices: ["Roseau","Choucoune","Haïti chérie","La marche haïtienne"], answer: 1, note: "Choucoune (1883) d'Oswald Durand est l'un des premiers poèmes importants en créole haïtien." },
-    { q: "Jacques-Stephen Alexis est l'auteur de :", choices: ["Les Misérables","Compère Général Soleil (1955)","Dézafi","L'Espace d'un cillement"], answer: 1, note: "Alexis (1922-1961) : 'Compère Général Soleil' mêle réalisme merveilleux et engagement politique." },
-    { q: "Marie Vieux-Chauvet a écrit le triptyque :", choices: ["Amour, Colère et Folie (1968)","Gouverneurs, Soldats et Prêtres","Pays sans chapeau","La Piste des sortilèges"], answer: 0, note: "'Amour, Colère et Folie' (1968) dénonce la dictature duvaliériste." },
-    { q: "Frankétienne est notamment connu pour :", choices: ["Avoir créé le mouvement indigéniste","Son roman 'Dézafi' (1975), premier roman publié en créole haïtien","Sa pièce 'La Tragédie du Roi Christophe'","Ses essais sur la révolution haïtienne"], answer: 1, note: "'Dézafi' (1975) est le premier roman écrit entièrement en créole haïtien." },
-    { q: "René Depestre est connu pour :", choices: ["Pluie et Vent sur Télumée Miracle","Étincelles (1945) et son engagement pour la négritude","Le Cahier d'un retour au pays natal","La Rue Cases-Nègres"], answer: 1, note: "René Depestre publie 'Étincelles' à 19 ans (1945), proche de Césaire et du mouvement négritude." },
-    { q: "Le réalisme merveilleux haïtien théorisé par Alexis signifie :", choices: ["Un style d'écriture purement réaliste sans fantastique","L'intégration du merveilleux (vaudou, croyances) dans la réalité quotidienne haïtienne","Un mouvement de retour à la nature","La description objective de la société haïtienne"], answer: 1, note: "Alexis théorise en 1956 : le surnaturel (loas, vaudou) s'intègre naturellement au réel haïtien." },
-    { q: "La Revue Indigène (1927) est fondée par :", choices: ["Frankétienne et Depestre","Jacques Roumain, Philippe Thoby-Marcelin et Normil Sylvain","Anténor Firmin et Louis Joseph Janvier","Marie Chauvet et Alexis"], answer: 1, note: "La Revue Indigène (1927) : organe fondateur de l'Indigénisme haïtien." },
-    { q: "Edwidge Danticat est connue pour :", choices: ["Brother I'm Dying et Breath, Eyes, Memory","Gouverneurs de la Rosée","Compère Général Soleil","Pays sans chapeau"], answer: 0, note: "Danticat (née 1969) écrit en anglais sur l'expérience haïtienne." },
-  ],
-  "Littérature Française": [
-    { q: "Les trois unités du théâtre classique français sont :", choices: ["Unité de lieu, de temps et d'action","Unité de style, de longueur et de décor","Unité de héros, de conflit et de dénouement","Unité de langue, d'époque et de personnages"], answer: 0, note: "La règle des trois unités : une seule intrigue (action), 24h max (temps), un seul lieu." },
-    { q: "Voltaire critique l'optimisme naïf dans :", choices: ["L'Avare","Candide ou l'Optimisme (1759)","Les Misérables","Germinal"], answer: 1, note: "'Candide' (1759) dénonce la philosophie de Leibniz et les fanatismes." },
-    { q: "La préface de quel drame de Hugo pose les bases du Romantisme ?", choices: ["Hernani","Cromwell (1827)","Ruy Blas","Le Roi s'amuse"], answer: 1, note: "La Préface de Cromwell (1827) est le manifeste du Romantisme français." },
-    { q: "Le naturalisme de Zola applique la méthode :", choices: ["Poétique et symbolique","Scientifique et expérimentale appliquée au roman","Classique et didactique","Surréaliste et onirique"], answer: 1, note: "Zola (Le Roman expérimental, 1880) : le romancier est un 'expérimentateur'." },
-    { q: "Baudelaire inaugure la poésie moderne avec :", choices: ["Les Contemplations","Les Fleurs du Mal (1857)","Alcools","Sagesse"], answer: 1, note: "'Les Fleurs du Mal' (1857) : recueil fondateur du Symbolisme. Baudelaire explore spleen, idéal, beauté du mal." },
-    { q: "Le théâtre de l'absurde (Ionesco, Beckett) se caractérise par :", choices: ["Un dialogue logique et une intrigue claire","L'absurdité du langage, l'absence de sens et la dérision de la condition humaine","Le respect des règles classiques","Un engagement politique direct"], answer: 1, note: "Ionesco (La Cantatrice chauve, 1950), Beckett (En attendant Godot, 1952) : langage incohérent, existence absurde." },
-    { q: "Sartre définit l'existentialisme par la formule :", choices: ["L'inconscient est structuré comme un langage","L'existence précède l'essence","Je pense donc je suis","L'enfer, c'est le désordre"], answer: 1, note: "Sartre (L'Existentialisme est un humanisme, 1946) : l'homme se crée par ses choix et actes." },
-    { q: "Aimé Césaire est l'auteur du :", choices: ["Discours sur le colonialisme uniquement","Cahier d'un retour au pays natal (1939) et du Discours sur le colonialisme (1950)","L'Espace d'un cillement","Les Damnés de la Terre"], answer: 1, note: "Césaire (Martinique, 1913-2008) fonde la Négritude avec Senghor et Damas." },
-    { q: "'Madame Bovary' de Flaubert appartient au mouvement :", choices: ["Romantisme","Réalisme","Surréalisme","Classicisme"], answer: 1, note: "Flaubert est le maître du Réalisme : style impersonnel, observation clinique." },
-    { q: "Montesquieu dans 'L'Esprit des Lois' défend :", choices: ["La monarchie absolue de droit divin","La séparation des pouvoirs exécutif, législatif et judiciaire","Le contrat social rousseauiste","La suppression de toute loi"], answer: 1, note: "Montesquieu théorise la séparation des pouvoirs pour éviter le despotisme." },
-  ],
-};
+import { QUIZ_DATA } from "./quizData.js";
 
 // ─── SHUFFLE ──────────────────────────────────────────────────────────────────
 function shuffleArray(arr) {
@@ -658,6 +572,8 @@ function QuizScreen({ user, onNavigate }) {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [shaking, setShaking]       = useState(false);
   const [round, setRound]           = useState(1);
+  const [roundScore, setRoundScore] = useState(0);
+  const [usedQKeys, setUsedQKeys]   = useState(new Set());
   const [openQ, setOpenQ]           = useState("");
   const [openAnswer, setOpenAnswer] = useState("");
   const [aiCorrection, setAiCorrection] = useState("");
@@ -667,10 +583,14 @@ function QuizScreen({ user, onNavigate }) {
   const currentQ = shuffledQs[qIndex];
 
   const startQCM = (sub) => {
+    const all = shuffleArray(QUIZ_DATA[sub]);
+    const first10 = all.slice(0, 10);
+    const used = new Set(first10.map(q => q.q));
     setSubject(sub);
-    setShuffledQs(shuffleArray(QUIZ_DATA[sub]));
+    setShuffledQs(first10);
+    setUsedQKeys(used);
     setPhase("qcm");
-    setQIndex(0); setScore(0); setTotalAnswered(0);
+    setQIndex(0); setScore(0); setTotalAnswered(0); setRoundScore(0);
     setHearts(3); setStreak(0); setMaxStreak(0);
     setWrongAnswers([]); setSelected(null); setRound(1);
   };
@@ -700,6 +620,7 @@ function QuizScreen({ user, onNavigate }) {
       const newStreak  = streak + 1;
       const newMax     = Math.max(maxStreak, newStreak);
       setScore(newScore);
+      setRoundScore(r => r + 1);
       setStreak(newStreak);
       setMaxStreak(newMax);
     } else {
@@ -744,20 +665,32 @@ function QuizScreen({ user, onNavigate }) {
       return;
     }
     const next = qIndex + 1;
+    // Fin du round de 10 questions → écran Bravo
     if (next >= shuffledQs.length) {
-      // Nouveau round — mélange différent garanti
-      let newShuffled = shuffleArray(QUIZ_DATA[subject]);
-      // Éviter que la 1ère question du nouveau round = dernière du précédent
-      if (newShuffled[0].q === shuffledQs[shuffledQs.length - 1].q) {
-        newShuffled = shuffleArray(QUIZ_DATA[subject]);
-      }
-      setShuffledQs(newShuffled);
-      setQIndex(0);
-      setRound(r => r + 1);
-    } else {
-      setQIndex(next);
+      await saveScoreToSupabase(score + (selected === currentQ?.answer ? 0 : 0), totalAnswered, maxStreak);
+      setPhase("bravo");
+      return;
     }
+    setQIndex(next);
     setSelected(null);
+  };
+
+  // Continuer avec 10 nouvelles questions différentes
+  const continueQuiz = () => {
+    const all = QUIZ_DATA[subject] || [];
+    // Filtrer les questions déjà vues
+    const unseen = all.filter(q => !usedQKeys.has(q.q));
+    // Si toutes vues, repartir depuis zéro
+    const pool = unseen.length >= 10 ? unseen : shuffleArray(all);
+    const next10 = shuffleArray(pool).slice(0, 10);
+    const newUsed = new Set([...usedQKeys, ...next10.map(q => q.q)]);
+    setShuffledQs(next10);
+    setUsedQKeys(newUsed);
+    setQIndex(0);
+    setSelected(null);
+    setRoundScore(0);
+    setRound(r => r + 1);
+    setPhase("qcm");
   };
 
   const submitOpen = async () => {
@@ -966,6 +899,73 @@ function QuizScreen({ user, onNavigate }) {
   );
 
   // ── GAME OVER ──
+  // ── BRAVO (fin d'un round de 10 questions) ──
+  if (phase === "bravo") {
+    const note20 = scoreToNote20(roundScore, 10);
+    const mention = getMention(note20);
+    const allCount = (QUIZ_DATA[subject] || []).length;
+    const seenCount = usedQKeys.size;
+    const hasMore = (allCount - seenCount) >= 5;
+    return (
+      <div className="fixed inset-0 flex flex-col items-center justify-center px-6" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b,#1a0505)" }}>
+        <div className="w-full max-w-sm space-y-5" style={{ animation: "popIn .5s cubic-bezier(.34,1.56,.64,1) both" }}>
+          {/* Emoji + titre */}
+          <div className="text-center">
+            <div style={{ fontSize: 64 }}>🎉</div>
+            <h2 className="text-white font-black text-3xl mt-2">Bravo !</h2>
+            <p className="text-blue-300 text-sm mt-1">{subject} • Wònn {round}</p>
+          </div>
+
+          {/* Score du round */}
+          <div className="rounded-3xl px-5 py-5 text-center" style={{ background: mention.bg, border: `2px solid ${mention.border}` }}>
+            <div style={{ fontSize: 40 }}>{mention.emoji}</div>
+            <div className="font-black mt-1" style={{ fontSize: 48, color: mention.color, lineHeight: 1 }}>
+              {note20}<span className="text-xl" style={{ color: mention.color + "99" }}>/20</span>
+            </div>
+            <div className="text-white font-bold text-lg mt-1">{mention.label}</div>
+            <div className="text-blue-300 text-sm mt-1">{roundScore}/10 kòrèk • {streak > 0 ? `🔥 Streak ${streak}` : ""}</div>
+          </div>
+
+          {/* Stats globales */}
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { icon: "✅", val: score,     label: "Total kòrèk" },
+              { icon: "🔥", val: maxStreak, label: "Max streak" },
+              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Kesyon vues" },
+            ].map((s, i) => (
+              <div key={i} className="rounded-2xl p-3 text-center" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
+                <div style={{ fontSize: 18 }}>{s.icon}</div>
+                <div className="text-white font-black text-base">{s.val}</div>
+                <div className="text-blue-500 text-xs">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Question */}
+          <p className="text-white font-bold text-center text-lg">Veux-tu kontinye ?</p>
+
+          {/* Boutons */}
+          <div className="flex gap-3">
+            <button onClick={continueQuiz} disabled={!hasMore && seenCount >= allCount}
+              className="flex-1 py-4 rounded-2xl font-black text-white text-lg active:scale-95 transition-transform"
+              style={{ background: "linear-gradient(135deg,#22c55e,#16a34a)", boxShadow: "0 4px 20px #22c55e44" }}>
+              ✅ Wi
+            </button>
+            <button onClick={() => setPhase("select")}
+              className="flex-1 py-4 rounded-2xl font-black text-lg active:scale-95 transition-transform"
+              style={{ background: "#0f1e4a", color: "#93c5fd", border: "1px solid #1e3a8a33" }}>
+              ❌ Non
+            </button>
+          </div>
+
+          {!hasMore && seenCount >= allCount && (
+            <p className="text-yellow-400 text-xs text-center">🏆 Ou fini tout {allCount} kesyon yo ! Bravo !</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   if (phase === "gameover") {
     const note20  = scoreToNote20(score, totalAnswered);
     const mention = getMention(note20);
