@@ -1,5 +1,5 @@
 export const QUIZ_DATA = {
-  "Biologie & Géologie": [
+  "SVT (Sciences de la Vie et de la Terre)": [
     { q: "L'ADN est composé de :", choices: ["Acides aminés", "Nucléotides", "Acides gras", "Glucose"], answer: 1, note: "L'ADN est un polynucléotide (base azotée + désoxyribose + phosphate)." },
     { q: "Les bases azotées de l'ADN sont :", choices: ["Adénine, Uracile, Guanine, Cytosine", "Adénine, Thymine, Guanine, Cytosine (A-T et G-C)", "Adénine, Thymine, Uracile, Cytosine", "Guanine, Uracile, Thymine, Adénine"], answer: 1, note: "ADN : 4 bases — A, T, G, C. Paires complémentaires : A-T (2 liaisons H) et G-C (3 liaisons H)." },
     { q: "Dans l'ARN, la thymine est remplacée par :", choices: ["L'adénine", "L'uracile (U)", "La guanine", "La cytosine"], answer: 1, note: "ARN : l'uracile (U) remplace la thymine (T). Bases ARN : A, U, G, C." },
@@ -247,7 +247,7 @@ export const QUIZ_DATA = {
     { q: "La réaction de saponification des triglycérides (corps gras) par NaOH produit :", choices: ["Des esters + eau", "Du savon (sels d'acides gras) + glycérol", "Des acides gras libres + eau", "Des alcools + acides"], answer: 1, note: "Saponification des corps gras : triglycérides + 3 NaOH → 3 savon (acide gras sodé) + glycérol." },
     { q: "Les halogènes sont dans :", choices: ["Groupe I", "Groupe II", "Groupe VII (17)", "Groupe 0 (18)"], answer: 2, note: "Les halogènes (F, Cl, Br, I, At) sont dans le groupe 17 (VIIA)." },
   ],
-  "Philosophie": [
+  "Philosophie & Dissertation": [
     { q: "La conscience désigne en philosophie :", choices: ["La capacité à dormir", "La connaissance immédiate que l'on a de soi-même et du monde", "Une maladie mentale", "L'inconscient freudien"], answer: 1, note: "Conscience : rapport immédiat du sujet à lui-même (conscience de soi) et au monde." },
     { q: "Descartes fonde la certitude sur :", choices: ["L'expérience sensible", "Le cogito : 'Je pense donc je suis' — la conscience de soi est indubitable", "La révélation divine", "L'autorité des anciens"], answer: 1, note: "Cogito ergo sum (Méditations, 1641) : la conscience de penser est la seule certitude indubitable." },
     { q: "Selon Freud, l'inconscient est :", choices: ["Identique à la conscience", "La partie du psychisme échappant à la conscience (refoulé, pulsions)", "Le cerveau en sommeil", "Une invention philosophique sans réalité"], answer: 1, note: "Freud : l'inconscient (ça, surmoi) contient des désirs refoulés qui influencent le comportement." },
@@ -320,7 +320,7 @@ export const QUIZ_DATA = {
     { q: "Le taoïsme de Lao-Tseu enseigne :", choices: ["La conquête de la nature", "L'harmonie avec le Tao et le non-agir (wu wei)", "La guerre comme vertu", "L'accumulation de richesses"], answer: 1, note: "Taoïsme : s'aligner avec le Tao (ordre naturel du cosmos) via le wu wei (non-agir)." },
     { q: "La notion de 'bovarysme collectif' (Price-Mars) désigne :", choices: ["Un trouble psychologique individuel", "La tendance collective de l'élite haïtienne à se prendre pour ce qu'elle n'est pas (Française) en niant ses origines", "Un mouvement politique", "Une forme de nationalisme"], answer: 1, note: "Bovarysme collectif : l'élite haïtienne vit dans l'illusion d'être française en reniant ses racines africaines." },
   ],
-  "Sciences Sociales": [
+  "Sciences Sociales & Citoyenneté": [
     { q: "L'occupation américaine d'Haïti a duré de :", choices: ["1804 à 1820", "1915 à 1934", "1930 à 1960", "1800 à 1815"], answer: 1, note: "L'occupation américaine d'Haïti : 28 juillet 1915 → 15 août 1934 (19 ans)." },
     { q: "Charlemagne Péralte fut :", choices: ["Un président haïtien", "Le chef de la résistance armée (cacos) contre l'occupation américaine, assassiné en 1919", "Un philosophe haïtien", "Un écrivain indigéniste"], answer: 1, note: "Charlemagne Péralte (1886-1919) : leader des cacos, résistance armée à l'occupation américaine." },
     { q: "La cérémonie du Bois Caïman (14 août 1791) marque :", choices: ["L'indépendance d'Haïti", "Le début symbolique de l'insurrection des esclaves de Saint-Domingue", "La fin de l'esclavage", "La rédaction de la Constitution de 1801"], answer: 1, note: "Bois Caïman : cérémonie vodou du 14 août 1791, point de départ symbolique de la Révolution haïtienne." },
@@ -643,7 +643,7 @@ export const QUIZ_DATA = {
     { q: "L'intégration par parties est : ∫u·dv = :", choices: ["u·v", "u·v - ∫v·du", "u·v + ∫v·du", "∫u·∫v"], answer: 1, note: "Intégration par parties : ∫u·v' dx = u·v - ∫v·u' dx. Utile pour ∫x·eˣ, ∫x·sin(x), etc." },
     { q: "La valeur absolue |x| représente :", choices: ["La valeur algébrique de x", "La distance de x à 0 (toujours positive ou nulle)", "Le carré de x", "Le signe de x"], answer: 1, note: "Valeur absolue : |x| = x si x ≥ 0, |x| = -x si x < 0. Toujours ≥ 0." },
   ],
-  "Kreyòl Ayisyen": [
+  "Créole Haïtien": [
     { q: "Daprè règleman IPN (1980), alfabe kreyòl la gen konbyen lèt ?", choices: ["26 lèt", "30 lèt", "32 lèt", "28 lèt"], answer: 2, note: "Alfabe kreyòl ofisyèl la (IPN 1980) gen 32 lèt. Li diferan de alfabe franse a ki gen 26 lèt." },
     { q: "Ki son vwayèl ki ekziste nan kreyòl epi ki ekri 'ou' ?", choices: ["Son /ɔ/ tankou 'or' an fransè", "Son /u/ tankou 'ou' nan 'ou di' an fransè", "Son /w/ sèlman", "Son /o/ louvri"], answer: 1, note: "'Ou' nan kreyòl = son /u/. Egzanp : 'bouk' = /buk/, 'jouk' = /ʒuk/. Se yon vwayèl ki distenge kreyòl de fransè." },
     { q: "Ki fason ki kòrèk pou ekri vèb 'manger' (fransè) an kreyòl ?", choices: ["manje", "manjé", "mangé", "mänge"], answer: 0, note: "Règ IPN : nan kreyòl pa gen aksan. 'Manger' (fransè) → 'manje' (kreyòl). Règ sa valab pou tout mo." },
@@ -875,7 +875,7 @@ export const QUIZ_DATA = {
     { q: "¿Qué es la 'entonación' en la comunicación oral?", choices: ["La velocidad del habla", "La variación de tono de voz que transmite emociones y significado", "La pronunciación de las vocales", "El vocabulario utilizado"], answer: 1, note: "Entonación : variation de la hauteur de la voix qui exprime les émotions, les questions, l'emphase. Essentielle à la communication orale." },
     { q: "¿Cómo se dice 'please' en español?", choices: ["Gracias", "Por favor", "Lo siento", "De nada"], answer: 1, note: "'Por favor' = s'il vous plaît / please. Essentiel dans toute communication polie en espagnol." },
   ],
-  "Entrepreneuriat": [
+  "Entrepreneuriat Scolaire": [
     { q: "L'entrepreneuriat désigne :", choices: ["Le fait d'être salarié dans une grande entreprise", "La création et la gestion d'une activité économique en prenant des risques pour innover et créer de la valeur", "L'héritage d'une entreprise familiale", "Le travail informel uniquement"], answer: 1, note: "Entrepreneuriat : identification d'une opportunité + création d'une activité + prise de risque calculé + création de valeur économique et sociale." },
     { q: "Un entrepreneur est caractérisé par :", choices: ["L'évitement du risque total", "La prise d'initiative, la créativité, la résilience et la capacité à prendre des risques calculés", "L'obéissance stricte aux règles", "L'attente d'opportunités parfaites"], answer: 1, note: "Qualités d'un entrepreneur : initiative, créativité, prise de risque calculé, persévérance, sens de l'organisation." },
     { q: "Un plan d'affaires (business plan) est :", choices: ["Uniquement un budget", "Un document qui décrit le projet, l'analyse du marché, la stratégie, les prévisions financières et l'équipe", "Uniquement les objectifs commerciaux", "Uniquement le financement recherché"], answer: 1, note: "Business plan : description du projet, étude de marché, stratégie marketing, plan financier, équipe — guide le développement de l'entreprise." },
@@ -928,7 +928,7 @@ export const QUIZ_DATA = {
     { q: "Le 'pitch' d'un projet entrepreneurial est :", choices: ["Un document comptable", "Une présentation courte et percutante du projet devant des investisseurs ou partenaires potentiels", "Un plan financier détaillé", "Un contrat commercial"], answer: 1, note: "Pitch : présentation synthétique (souvent 2-5 minutes) d'un projet — problème, solution, marché, modèle économique, équipe, besoins." },
     { q: "Qu'est-ce qu'un 'marché de niche' ?", choices: ["Un grand marché général", "Un segment de marché restreint avec des besoins très spécifiques, souvent peu ou mal servis", "Un marché illégal", "Un marché agricole"], answer: 1, note: "Niche : petit segment ciblé avec des besoins spécifiques. Avantage : moins de concurrence. Stratégie adaptée aux petites entreprises haïtiennes." },
   ],
-  "Informatique & Technologie": [
+  "Informatique, Technologie & Arts": [
     { q: "Un ordinateur est composé principalement de :", choices: ["Uniquement d'un écran", "Hardware (matériel physique) et Software (logiciels/programmes)", "Uniquement de câbles", "Uniquement de l'électricité"], answer: 1, note: "Ordinateur = Hardware (processeur CPU, RAM, disque dur, écran, clavier) + Software (système d'exploitation, applications)." },
     { q: "La RAM (Random Access Memory) est :", choices: ["La mémoire permanente de l'ordinateur", "La mémoire vive temporaire utilisée par le processeur pendant l'exécution des programmes", "Le disque dur", "Le processeur"], answer: 1, note: "RAM = mémoire de travail temporaire. Elle stocke les données en cours d'utilisation. Plus la RAM est grande, plus l'ordinateur est fluide." },
     { q: "Le CPU (Central Processing Unit) est :", choices: ["La carte graphique", "Le processeur — le cerveau de l'ordinateur qui exécute les instructions", "La mémoire RAM", "Le disque dur"], answer: 1, note: "CPU : exécute les calculs et instructions des programmes. Vitesse mesurée en GHz (gigahertz). Ex: Intel, AMD." },
