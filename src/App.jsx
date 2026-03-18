@@ -115,15 +115,23 @@ async function idbSaveScan(phone, entry) {
   }
 }
 
-async function idbGetScans(phone) {
+async function idbGetScans(phone, limit = 50) {
   try {
     const db = await openDB();
     return new Promise((resolve, reject) => {
-      const tx    = db.transaction(STORE_SCANS, "readonly");
-      const index = tx.objectStore(STORE_SCANS).index("phone");
-      const req   = index.getAll(phone);
-      req.onsuccess = () => resolve((req.result || []).sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 50));
-      req.onerror   = () => reject(req.error);
+      const tx      = db.transaction(STORE_SCANS, "readonly");
+      const store   = tx.objectStore(STORE_SCANS);
+      const results = [];
+      // Curseur en ordre inverse (id décroissant = plus récent en premier)
+      // On filtre par phone sans charger tout en mémoire
+      const req = store.openCursor(null, "prev");
+      req.onsuccess = (e) => {
+        const cursor = e.target.result;
+        if (!cursor || results.length >= limit) { resolve(results); return; }
+        if (cursor.value.phone === phone) results.push(cursor.value);
+        cursor.continue();
+      };
+      req.onerror = () => reject(req.error);
     });
   } catch (err) {
     console.warn("IndexedDB lecture échouée, fallback localStorage", err);
@@ -206,28 +214,77 @@ function compressImage(base64, maxSize = 800, quality = 0.6) {
   });
 }
 
+// ─── KATEX LOADER (CDN, chargé une seule fois) ────────────────────────────────
+let katexReady = false;
+let katexQueue = [];
+function ensureKatex() {
+  if (katexReady) return Promise.resolve();
+  if (document.getElementById("katex-css")) {
+    // CSS déjà injecté, attendre le script
+    return new Promise(r => katexQueue.push(r));
+  }
+  // Injecter la CSS
+  const link = document.createElement("link");
+  link.id   = "katex-css";
+  link.rel  = "stylesheet";
+  link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
+  document.head.appendChild(link);
+  // Injecter le script
+  const script = document.createElement("script");
+  script.src   = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js";
+  script.onload = () => {
+    katexReady = true;
+    katexQueue.forEach(r => r());
+    katexQueue = [];
+  };
+  document.head.appendChild(script);
+  return new Promise(r => katexQueue.push(r));
+}
+
 // ─── LATEX RENDERER ───────────────────────────────────────────────────────────
 function LatexText({ content }) {
-  const parts = [];
-  const regex = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$/g;
-  let last = 0, m;
-  while ((m = regex.exec(content)) !== null) {
-    if (m.index > last) parts.push({ type: "text", val: content.slice(last, m.index) });
-    parts.push({ type: m[1] ? "block" : "inline", val: m[1] || m[2] });
-    last = m.index + m[0].length;
-  }
-  if (last < content.length) parts.push({ type: "text", val: content.slice(last) });
+  const [html, setHtml] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    // Si pas de formule LaTeX → rendu simple
+    if (!/\$/.test(content)) { setHtml(null); return; }
+    ensureKatex().then(() => {
+      if (cancelled) return;
+      try {
+        const result = content.replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
+          try { return window.katex.renderToString(expr.trim(), { displayMode: true, throwOnError: false }); }
+          catch { return `<code class="katex-fallback">${expr}</code>`; }
+        }).replace(/\$([^$\n]+?)\$/g, (_, expr) => {
+          try { return window.katex.renderToString(expr.trim(), { displayMode: false, throwOnError: false }); }
+          catch { return `<code class="katex-fallback">${expr}</code>`; }
+        });
+        setHtml(result);
+      } catch { setHtml(null); }
+    });
+    return () => { cancelled = true; };
+  }, [content]);
+
+  // Rendu KaTeX disponible → HTML brut
+  if (html) return (
+    <span dangerouslySetInnerHTML={{ __html: html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") }}
+      style={{ lineHeight: 1.7 }} />
+  );
+
+  // Fallback : rendu texte avec formatage minimal (pendant chargement ou sans formule)
   return (
     <span>
-      {parts.map((p, i) => {
-        if (p.type === "text") return <MdText key={i} text={p.val} />;
-        if (p.type === "block") return (
-          <div key={i} className="my-2 px-3 py-2 rounded-lg overflow-x-auto" style={{ background: "#0d2244" }}>
-            <code className="text-blue-300 font-mono text-sm">{p.val}</code>
-          </div>
-        );
-        return <code key={i} className="px-1 rounded font-mono text-sm" style={{ background: "#0d2244", color: "#93c5fd" }}>{p.val}</code>;
-      })}
+      {content.split("\n").map((line, i, arr) => (
+        <span key={i}>
+          <span dangerouslySetInnerHTML={{ __html:
+            line
+              .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+              .replace(/\$\$?([\s\S]+?)\$?\$/g, (_, e) =>
+                `<code style="background:#0d2244;color:#93c5fd;padding:1px 4px;border-radius:4px;font-family:monospace;font-size:.85em">${e}</code>`)
+          }} />
+          {i < arr.length - 1 && <br />}
+        </span>
+      ))}
     </span>
   );
 }
@@ -540,7 +597,14 @@ function ChatScreen({ user, onNavigate }) {
           <input ref={fileRef} type="file" accept="image/*" onChange={handleImage}
             style={{ position: "absolute", width: 0, height: 0, opacity: 0, pointerEvents: "none" }} />
           <textarea value={input} onChange={e => setInput(e.target.value)}
-            onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
+            onKeyDown={e => {
+              // Sur mobile Android/iOS, isComposing = true pendant la saisie prédictive
+              // → on ne déclenche pas l'envoi pendant la composition (suggestions clavier)
+              if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
             placeholder={remaining <= 0 ? "Limit jou a rive..." : "Poze yon kesyon oswa analize yon egzèsis..."}
             rows={1} disabled={remaining <= 0}
             className="flex-1 rounded-xl px-4 py-3 text-sm outline-none resize-none"
@@ -613,19 +677,18 @@ function QuizScreen({ user, onNavigate }) {
     if (selected !== null) return;
     setSelected(idx);
     const correct = idx === currentQ.answer;
-    const newTotal = totalAnswered + 1;
-    setTotalAnswered(newTotal);
+    setTotalAnswered(t => t + 1);
     if (correct) {
-      const newScore   = score + 1;
-      const newStreak  = streak + 1;
-      const newMax     = Math.max(maxStreak, newStreak);
-      setScore(newScore);
+      setScore(s => s + 1);
       setRoundScore(r => r + 1);
-      setStreak(newStreak);
-      setMaxStreak(newMax);
+      setStreak(s => {
+        const ns = s + 1;
+        setMaxStreak(m => Math.max(m, ns));
+        return ns;
+      });
     } else {
-      const newHearts = hearts - 1;
-      setHearts(newHearts);
+      // handleChoice décrémente hearts — handleNext lira la valeur déjà mise à jour
+      setHearts(h => h - 1);
       setStreak(0);
       setShaking(true);
       setTimeout(() => setShaking(false), 500);
@@ -636,29 +699,9 @@ function QuizScreen({ user, onNavigate }) {
     }
   };
 
-  const nextQ = async () => {
-    const newHearts = hearts - (selected !== null && selected !== currentQ?.answer ? 0 : 0);
-    // Check if hearts just hit 0 (wrong answer was last action)
-    if (hearts <= 0 || (selected !== null && selected !== currentQ?.answer && hearts - 1 <= 0)) {
-      const finalHearts = selected !== null && selected !== currentQ?.answer ? hearts - 1 : hearts;
-      if (finalHearts <= 0) {
-        await saveScoreToSupabase(score, totalAnswered, maxStreak);
-        setPhase("gameover");
-        return;
-      }
-    }
-    // Continue — reshuffle if needed
-    const next = qIndex + 1;
-    if (next >= shuffledQs.length) {
-      setShuffledQs(shuffleArray(QUIZ_DATA[subject]));
-      setQIndex(0);
-    } else {
-      setQIndex(next);
-    }
-    setSelected(null);
-  };
-
+  // handleNext utilise hearts tel qu'il est après handleChoice (valeur déjà décrémentée)
   const handleNext = async () => {
+    // hearts est déjà à jour : si handleChoice a perdu le dernier cœur, hearts === 0 ici
     if (hearts <= 0) {
       await saveScoreToSupabase(score, totalAnswered, maxStreak);
       setPhase("gameover");
@@ -667,7 +710,7 @@ function QuizScreen({ user, onNavigate }) {
     const next = qIndex + 1;
     // Fin du round de 10 questions → écran Bravo
     if (next >= shuffledQs.length) {
-      await saveScoreToSupabase(score + (selected === currentQ?.answer ? 0 : 0), totalAnswered, maxStreak);
+      await saveScoreToSupabase(score, totalAnswered, maxStreak);
       setPhase("bravo");
       return;
     }
@@ -1663,19 +1706,47 @@ function PartnerScreen({ onBack }) {
   );
 }
 
+// ─── SESSION HELPERS ──────────────────────────────────────────────────────────
+const SESSION_KEY = "gid_ns4_session";
+function sessionSave(u)   { try { localStorage.setItem(SESSION_KEY, JSON.stringify(u)); } catch {} }
+function sessionLoad()    { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch { return null; } }
+function sessionClear()   { try { localStorage.removeItem(SESSION_KEY); } catch {} }
+
 // ─── APP ROOT ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("splash");
   const [user, setUser]     = useState(null);
   const nav = (s) => setScreen(s);
 
-  if (screen === "splash")      return <SplashScreen onDone={() => setScreen("login")} />;
-  if (screen === "login")       return <LoginScreen onLogin={(u) => { setUser(u); setScreen("chat"); }} onNavigate={nav} />;
+  // ── Restaure la session au démarrage (évite déconnexion après refresh) ──
+  useEffect(() => {
+    const saved = sessionLoad();
+    if (saved?.phone && saved?.code) {
+      setUser(saved);
+      // Splash toujours visible brièvement, puis → chat directement
+      setTimeout(() => setScreen("chat"), 1800);
+    }
+  }, []);
+
+  const handleLogin = (u) => {
+    sessionSave(u);
+    setUser(u);
+    setScreen("chat");
+  };
+
+  const handleLogout = () => {
+    sessionClear();
+    setUser(null);
+    setScreen("login");
+  };
+
+  if (screen === "splash")      return <SplashScreen onDone={() => setScreen(user ? "chat" : "login")} />;
+  if (screen === "login")       return <LoginScreen onLogin={handleLogin} onNavigate={nav} />;
   if (screen === "chat")        return <ChatScreen user={user} onNavigate={nav} />;
   if (screen === "quiz")        return <QuizScreen user={user} onNavigate={nav} />;
   if (screen === "leaderboard") return <LeaderboardScreen user={user} onNavigate={nav} />;
   if (screen === "history")     return <HistoryScreen user={user} onNavigate={nav} />;
-  if (screen === "menu")        return <MenuScreen user={user} onNavigate={nav} onLogout={() => { setUser(null); setScreen("login"); }} />;
+  if (screen === "menu")        return <MenuScreen user={user} onNavigate={nav} onLogout={handleLogout} />;
   if (screen === "payment")     return <PaymentScreen onBack={() => nav(user ? "menu" : "login")} />;
   if (screen === "dashboard")   return <DashboardScreen onBack={() => nav("menu")} userCode={user?.code} />;
   if (screen === "partner")     return <PartnerScreen onBack={() => nav(user ? "menu" : "login")} />;
