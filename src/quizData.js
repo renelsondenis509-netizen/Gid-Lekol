@@ -643,7 +643,8 @@ export const QUIZ_DATA = {
     { q: "L'intégration par parties est : ∫u·dv = :", choices: ["u·v", "u·v - ∫v·du", "u·v + ∫v·du", "∫u·∫v"], answer: 1, note: "Intégration par parties : ∫u·v' dx = u·v - ∫v·u' dx. Utile pour ∫x·eˣ, ∫x·sin(x), etc." },
     { q: "La valeur absolue |x| représente :", choices: ["La valeur algébrique de x", "La distance de x à 0 (toujours positive ou nulle)", "Le carré de x", "Le signe de x"], answer: 1, note: "Valeur absolue : |x| = x si x ≥ 0, |x| = -x si x < 0. Toujours ≥ 0." },
   ],
-  "Créole Haïtien": [
+    "Kreyòl Ayisyen": [
+
     { q: "Daprè règleman IPN (1980), alfabe kreyòl la gen konbyen lèt ?", choices: ["26 lèt", "30 lèt", "32 lèt", "28 lèt"], answer: 2, note: "Alfabe kreyòl ofisyèl la (IPN 1980) gen 32 lèt. Li diferan de alfabe franse a ki gen 26 lèt." },
     { q: "Ki son vwayèl ki ekziste nan kreyòl epi ki ekri 'ou' ?", choices: ["Son /ɔ/ tankou 'or' an fransè", "Son /u/ tankou 'ou' nan 'ou di' an fransè", "Son /w/ sèlman", "Son /o/ louvri"], answer: 1, note: "'Ou' nan kreyòl = son /u/. Egzanp : 'bouk' = /buk/, 'jouk' = /ʒuk/. Se yon vwayèl ki distenge kreyòl de fransè." },
     { q: "Ki fason ki kòrèk pou ekri vèb 'manger' (fransè) an kreyòl ?", choices: ["manje", "manjé", "mangé", "mänge"], answer: 0, note: "Règ IPN : nan kreyòl pa gen aksan. 'Manger' (fransè) → 'manje' (kreyòl). Règ sa valab pou tout mo." },
@@ -704,6 +705,9 @@ export const QUIZ_DATA = {
     { q: "Les devinettes (dèvinèt) haïtiennes servent à :", choices: ["Punir les gens qui ne connaissent pas la réponse", "Développer la logique, la communication et la culture — un jeu intellectuel collectif", "Uniquement amuser les enfants", "Garder des secrets"], answer: 1, note: "Dèvinèt = jeu oral culturel qui développe la pensée critique, la créativité et la connaissance culturelle haïtienne." },
     { q: "'Tijen Lasous' et d'autres contes haïtiens utilisent souvent des animaux pour :", choices: ["Montrer que les animaux sont dangereux", "Symboliser des types humains (rusé, généreux, avide) — critique sociale déguisée", "Enseigner la zoologie", "Divertir les adultes uniquement"], answer: 1, note: "Comme les fables de La Fontaine, les contes haïtiens utilisent des animaux comme symboles de caractères humains → morale sociale." },
     { q: "La transmission orale de la culture haïtienne passe principalement par :", choices: ["Les institutions académiques uniquement", "La famille, les 'lakou' (cours communautaires), les veillées funèbres et les fêtes", "Les médias modernes uniquement", "Les textes écrits seulement"], answer: 1, note: "Transmission orale haïtienne : famille (lakou), veillées (kont, pwovèb, chanson), fêtes vodou — vecteurs culturels fondamentaux." },
+  ],
+  "Art & Mizik Ayisyen": [
+
     { q: "Le Centre d'Art de Port-au-Prince (1944), fondé par DeWitt Peters, a permis de :", choices: ["Former des artistes académiques uniquement", "Révéler les artistes naïfs haïtiens (Hyppolite, Bigaud, Obin) au monde entier", "Importer des œuvres étrangères", "Former uniquement des architectes"], answer: 1, note: "Le Centre d'Art (1944) : révolution culturelle — artistes autodidactes haïtiens reconnus internationalement (NY, Paris, musées mondiaux)." },
     { q: "Hector Hyppolite (1894-1948) est célèbre pour :", choices: ["Une peinture réaliste académique", "Une peinture naïve inspirée du vodou — couleurs vibrantes, lwa, cérémonies, nature haïtienne", "Des sculptures en métal", "De la photographie"], answer: 1, note: "Hyppolite : peintre naïf autodidacte et vodouisant — ses œuvres ont été exposées à New York, Paris et dans les musées mondiaux." },
     { q: "Philomé Obin (1892-1986) est reconnu pour ses peintures représentant :", choices: ["Des portraits uniquement", "L'histoire haïtienne, la vie sociale du Cap-Haïtien, les événements culturels et politiques", "L'abstrait seulement", "Des paysages étrangers"], answer: 1, note: "Philomé Obin : peintre du Cap-Haïtien — mémoire picturale d'Haïti (indépendance, vie sociale, portraits historiques)." },
@@ -735,8 +739,7 @@ export const QUIZ_DATA = {
     { q: "Le créole haïtien est culturellement important car :", choices: ["C'est la langue des élites uniquement", "C'est la langue maternelle de tous les Haïtiens — symbole de l'identité collective au-delà des classes sociales", "C'est un dialecte du français", "C'est uniquement utilisé dans les zones rurales"], answer: 1, note: "Kreyòl = langue de tous les Haïtiens (100% de la population). Contrairement au français (10-15%), le créole unit tous les Haïtiens." },
     { q: "La 'négritude' haïtienne, illustrée par Price-Mars et Roumain, défend :", choices: ["L'imitation de la culture française", "La revalorisation des cultures africaines et de l'identité haïtienne contre le colonialisme culturel", "L'abandon du créole", "L'assimilation occidentale"], answer: 1, note: "Négritude haïtienne : revalorisation des cultures africaines, du vodou, du créole — contre le 'bovarysme collectif' dénoncé par Price-Mars." },
     { q: "Le 'coumbite' (koumbite) est une tradition haïtienne de :", choices: ["Combat militaire collectif", "Travail agricole collectif et solidaire — tous les voisins s'entraident pour cultiver la terre ensemble", "Fête exclusive", "Commerce informel"], answer: 1, note: "Koumbite : tradition paysanne haïtienne de travail collectif — base de la solidarité communautaire, thème central dans 'Gouverneurs de la Rosée' de Roumain." },
-  ]
-,
+  ],
   "Anglais": [
     { q: "Which sentence is grammatically correct?", choices: ["She don't like coffee.", "She doesn't like coffee.", "She not like coffee.", "She isn't like coffee."], answer: 1, note: "3rd person singular present: use 'does not' (doesn't). 'She doesn't like coffee.' is correct." },
     { q: "Choose the correct form: 'I ___ to school every day.'", choices: ["going", "go", "goes", "am go"], answer: 1, note: "Simple present, 1st person: 'I go'. The base form is used with I/you/we/they." },
