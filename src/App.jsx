@@ -676,10 +676,7 @@ function QuizScreen({ user, onNavigate }) {
   const [round, setRound]           = useState(1);
   const [roundScore, setRoundScore] = useState(0);
   const [usedQKeys, setUsedQKeys]   = useState(new Set());
-  const [openQ, setOpenQ]           = useState("");
-  const [openAnswer, setOpenAnswer] = useState("");
-  const [aiCorrection, setAiCorrection] = useState("");
-  const [loadingAI, setLoadingAI]   = useState(false);
+
 
   const availableSubjects = Object.keys(QUIZ_DATA).filter(s => user.subjects.includes(s));
   const currentQ = shuffledQs[qIndex];
@@ -774,21 +771,7 @@ function QuizScreen({ user, onNavigate }) {
     setPhase("qcm");
   };
 
-  const submitOpen = async () => {
-    if (!openQ.trim() || !openAnswer.trim()) return;
-    setLoadingAI(true); setAiCorrection("");
-    try {
-      const result = await callEdge({
-        action: "ask", phone: user.phone, schoolCode: user.code,
-        message: `Corrige la réponse de cet élève NS4.\n\nQuestion : ${openQ}\n\nRéponse de l'élève : ${openAnswer}\n\nDonne une note /10, identifie les erreurs et donne la bonne réponse complète.`,
-        imageBase64: null, history: [], subject: user.subjects[0],
-      });
-      setAiCorrection(result.reply);
-    } catch (e) {
-      setAiCorrection(`${parseApiError(e).icon} ${parseApiError(e).message}`);
-    }
-    setLoadingAI(false);
-  };
+
 
   const icons = ["📗","⚗️","⚡","📖","🌍","✍️","📚"];
   const allIcons = Object.keys(QUIZ_DATA).reduce((acc, s, i) => { acc[s] = icons[i % icons.length]; return acc; }, {});
@@ -812,17 +795,7 @@ function QuizScreen({ user, onNavigate }) {
             <div className="text-blue-400 text-xs">Kesyon enfini • Jwe jouk ou pèdi 3 kè</div>
           </div>
         </div>
-        <button onClick={() => setPhase("open")}
-          className="w-full px-5 py-4 rounded-2xl text-left flex items-center gap-4 active:scale-95 transition-transform"
-          style={{ background: "linear-gradient(135deg,#1a4fd6,#2563eb)", boxShadow: "0 4px 20px #1a4fd633" }}>
-          <span style={{ fontSize: 28 }}>✍️</span>
-          <div>
-            <div className="text-white font-bold">Question Ouverte</div>
-            <div className="text-blue-200 text-xs">Skriv repons ou, Prof Lakay ap korije l</div>
-          </div>
-          <span className="ml-auto text-blue-300 text-xl">›</span>
-        </button>
-        <p className="text-blue-600 text-xs text-center py-1">— oswa chwazi yon matière pou QCM —</p>
+        <p className="text-blue-600 text-xs text-center py-1">— Chwazi yon matière —</p>
         {availableSubjects.map(sub => (
           <button key={sub} onClick={() => startQCM(sub)}
             className="w-full px-5 py-4 rounded-2xl text-left flex items-center gap-4 active:scale-95 transition-transform"
@@ -851,50 +824,7 @@ function QuizScreen({ user, onNavigate }) {
     </div>
   );
 
-  // ── OPEN QUESTION ──
-  if (phase === "open") return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
-      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-        <button onClick={() => { setPhase("select"); setAiCorrection(""); setOpenQ(""); setOpenAnswer(""); }} className="text-blue-400 text-xl">←</button>
-        <h2 className="text-white font-bold">Question Ouverte ✍️</h2>
-      </div>
-      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4">
-        <div>
-          <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-2 block">Ta Kesyon</label>
-          <textarea value={openQ} onChange={e => setOpenQ(e.target.value)} rows={3}
-            placeholder="Ex: Expliquez le cycle de Krebs..."
-            className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none"
-            style={{ background: "#0f1e4a", border: "1.5px solid #1e3a8a44", color: "#e0e8ff" }} />
-        </div>
-        <div>
-          <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-2 block">Repons Ou</label>
-          <textarea value={openAnswer} onChange={e => setOpenAnswer(e.target.value)} rows={5}
-            placeholder="Ekri repons ou isit..."
-            className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none"
-            style={{ background: "#0f1e4a", border: "1.5px solid #1e3a8a44", color: "#e0e8ff" }} />
-        </div>
-        <button onClick={submitOpen} disabled={loadingAI || !openQ.trim() || !openAnswer.trim()}
-          className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
-          style={{ background: loadingAI ? "#333" : "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-          {loadingAI ? <><span className="animate-spin">⏳</span> Prof Lakay ap korije...</> : "🧑‍🏫 Voye bay Prof Lakay"}
-        </button>
-        {aiCorrection && (
-          <div className="rounded-2xl p-4" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33", animation: "fadeIn .4s ease both" }}>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-                <span style={{ fontSize: 14 }}>🧑‍🏫</span>
-              </div>
-              <span className="text-white font-bold text-sm">Kòreksyon Prof Lakay</span>
-            </div>
-            <div className="text-sm leading-relaxed" style={{ color: "#e0e8ff" }}>
-              <LatexText content={aiCorrection} />
-            </div>
-          </div>
-        )}
-      </div>
-      <BottomNav active="quiz" onNavigate={onNavigate} />
-    </div>
-  );
+
 
   // ── QCM (Mode Duolingo) ──
   if (phase === "qcm" && currentQ) return (
