@@ -82,6 +82,20 @@ function shuffleArray(arr) {
   return a;
 }
 
+// Mélange les choix d'une question et retourne la nouvelle position de la bonne réponse
+function shuffleChoices(q) {
+  const indexed = q.choices.map((c, i) => ({ c, correct: i === q.answer }));
+  for (let i = indexed.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
+  }
+  return {
+    ...q,
+    choices: indexed.map(x => x.c),
+    answer: indexed.findIndex(x => x.correct),
+  };
+}
+
 // ─── INDEXEDDB ────────────────────────────────────────────────────────────────
 const DB_NAME = "GidNS4DB";
 const DB_VERSION = 1;
@@ -672,7 +686,7 @@ function QuizScreen({ user, onNavigate }) {
 
   const startQCM = (sub) => {
     const all = shuffleArray(QUIZ_DATA[sub]);
-    const first10 = all.slice(0, 10);
+    const first10 = all.slice(0, 10).map(shuffleChoices);
     const used = new Set(first10.map(q => q.q));
     setSubject(sub);
     setShuffledQs(first10);
@@ -749,7 +763,7 @@ function QuizScreen({ user, onNavigate }) {
     const unseen = all.filter(q => !usedQKeys.has(q.q));
     // Si toutes vues, repartir depuis zéro
     const pool = unseen.length >= 10 ? unseen : shuffleArray(all);
-    const next10 = shuffleArray(pool).slice(0, 10);
+    const next10 = shuffleArray(pool).slice(0, 10).map(shuffleChoices);
     const newUsed = new Set([...usedQKeys, ...next10.map(q => q.q)]);
     setShuffledQs(next10);
     setUsedQKeys(newUsed);
