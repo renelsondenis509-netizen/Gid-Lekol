@@ -340,6 +340,7 @@ function SplashScreen({ onDone }) {
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 function LoginScreen({ onLogin, onNavigate }) {
+  const [name, setName]   = useState("");
   const [phone, setPhone] = useState("");
   const [code, setCode]   = useState("");
   const [error, setError] = useState("");
@@ -347,6 +348,7 @@ function LoginScreen({ onLogin, onNavigate }) {
 
   const handleLogin = async () => {
     setError("");
+    if (!name.trim() || name.trim().length < 2) { setError("Antre non ou ki valid (omwen 2 lèt)."); return; }
     if (!phone.trim() || phone.length < 8) { setError("Antre yon nimewo telefòn valid."); return; }
     if (!code.trim()) { setError("Antre kòd lekòl ou a."); return; }
     setLoading(true);
@@ -354,6 +356,7 @@ function LoginScreen({ onLogin, onNavigate }) {
       const result = await callEdge({ action: "validate_code", phone: phone.trim(), schoolCode: code.toUpperCase().trim() });
       if (!result.valid) { setError(result.reason || "Kòd la pa valid."); setLoading(false); return; }
       onLogin({
+        name: name.trim(),
         phone: phone.trim(),
         code: code.toUpperCase().trim(),
         school: result.school.name,
@@ -389,6 +392,12 @@ function LoginScreen({ onLogin, onNavigate }) {
           <span className="text-green-300 text-xs font-medium">Koneksyon sécurisé • Données protégées</span>
         </div>
         <div className="w-full max-w-sm space-y-4">
+          <div>
+            <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-1.5 block">👤 Non Konplè</label>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ex: Marie Joseph"
+              className="w-full rounded-xl px-4 py-3.5 text-white placeholder-blue-800 font-medium outline-none"
+              style={{ background: "#ffffff0d", border: "1.5px solid #ffffff18" }} />
+          </div>
           <div>
             <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-1.5 block">📱 Nimewo Telefòn</label>
             <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Ex: 50934567890"
@@ -458,7 +467,7 @@ function ExpiryBanner({ daysRemaining }) {
 function ChatScreen({ user, onNavigate }) {
   const [messages, setMessages] = useState([{
     role: "assistant",
-    content: `Bonjou ! Mwen se **Prof Lakay** 👋\n\nJe suis ton assistant IA pour le **Bac NS4**.\n\n📚 Matières disponibles pour toi :\n${user.subjects.map(s => `• ${s}`).join("\n")}\n\n**An n al travay ! 💪**`
+    content: `Bonjou **${user.name || ""}** ! Mwen se **Prof Lakay** 👋\n\nJe suis ton assistant IA pour le **Bac NS4**.\n\n📚 Matières disponibles pour toi :\n${user.subjects.map(s => `• ${s}`).join("\n")}\n\n**An n al travay ! 💪**`
   }]);
   const [input, setInput]       = useState("");
   const [image, setImage]       = useState(null);
@@ -1443,7 +1452,8 @@ function MenuScreen({ user, onNavigate, onLogout }) {
             <span style={{ fontSize: 28 }}>👤</span>
           </div>
           <div>
-            <div className="text-white font-bold">{user.phone}</div>
+            <div className="text-white font-bold">{user.name || user.phone}</div>
+          <div className="text-blue-400 text-xs">{user.phone}</div>
             <div className="text-blue-300 text-xs">{user.school}</div>
             <div className="text-orange-300 text-xs mt-0.5">🔑 {user.code}</div>
           </div>
