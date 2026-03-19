@@ -310,8 +310,17 @@ function SplashScreen({ onDone }) {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b,#1a0505)" }}>
       <div style={{ animation: "popIn .6s cubic-bezier(.34,1.56,.64,1) both" }}>
-        <img src={APP_LOGO} alt="Gid NS4" className="mb-5 mx-auto"
-          style={{ width: 180, height: 180, objectFit: "contain", filter: "drop-shadow(0 0 30px #3b82f688)" }} />
+        <div className="mb-5 mx-auto" style={{
+            width: 120, height: 120,
+            borderRadius: "26px",
+            background: "#000",
+            boxShadow: "0 0 0 2px #3b82f655, 0 0 40px #3b82f644, 0 8px 32px #000a",
+            overflow: "hidden",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+          <img src={APP_LOGO} alt="Gid NS4"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
         <p className="text-center text-blue-300 mt-1 text-sm tracking-widest uppercase">Prof Lakay • NS4 Haïti</p>
       </div>
       <div className="absolute bottom-12 flex gap-2">
@@ -363,8 +372,17 @@ function LoginScreen({ onLogin, onNavigate }) {
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b,#1a0505)" }}>
       <div className="flex-1 flex flex-col items-center justify-center px-6">
-        <img src={APP_LOGO} alt="Gid NS4" className="mb-4 mx-auto"
-          style={{ width: 110, height: 110, objectFit: "contain", filter: "drop-shadow(0 0 20px #3b82f666)" }} />
+        <div className="mb-4 mx-auto" style={{
+            width: 84, height: 84,
+            borderRadius: "20px",
+            background: "#000",
+            boxShadow: "0 0 0 1.5px #3b82f644, 0 4px 20px #000a",
+            overflow: "hidden",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+          <img src={APP_LOGO} alt="Gid NS4"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
         <p className="text-blue-300 text-xs mb-6 tracking-wider">Asistan IA pou elèv NS4</p>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-6" style={{ background: "#14532d33", border: "1px solid #22c55e33" }}>
           <span>🔒</span>
