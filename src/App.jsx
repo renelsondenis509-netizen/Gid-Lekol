@@ -550,8 +550,8 @@ function ChatScreen({ user, onNavigate }) {
     <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
       <ExpiryBanner daysRemaining={user.daysRemaining} />
       <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-          <span style={{ fontSize: 20 }}>🧑‍🏫</span>
+        <div style={{ width: 40, height: 40, borderRadius: 10, overflow: "hidden", flexShrink: 0, background: "#000" }}>
+          <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
         <div className="flex-1">
           <div className="text-white font-bold text-sm">Prof Lakay</div>
@@ -780,7 +780,9 @@ function QuizScreen({ user, onNavigate }) {
   if (phase === "select") return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
       <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-        <span style={{ fontSize: 24 }}>🧠</span>
+        <div style={{ width: 38, height: 38, borderRadius: 9, overflow: "hidden", flexShrink: 0, background: "#000" }}>
+          <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
         <div>
           <h2 className="text-white font-bold">Quiz NS4</h2>
           <p className="text-blue-400 text-xs">{availableSubjects.length} matière{availableSubjects.length > 1 ? "s" : ""} disponib</p>
@@ -1392,8 +1394,8 @@ function MenuScreen({ user, onNavigate, onLogout }) {
     <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
       <div className="px-6 pt-10 pb-6 border-b" style={{ borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-            <span style={{ fontSize: 28 }}>👤</span>
+          <div style={{ width: 56, height: 56, borderRadius: 14, overflow: "hidden", flexShrink: 0, background: "#000", boxShadow: "0 0 0 2px #3b82f633" }}>
+            <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
           <div>
             <div className="text-white font-bold">{user.name || user.phone}</div>
