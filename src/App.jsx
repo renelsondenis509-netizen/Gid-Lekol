@@ -1736,11 +1736,7 @@ export default function App() {
   // ── Restaure la session au démarrage (évite déconnexion après refresh) ──
   useEffect(() => {
     const saved = sessionLoad();
-    if (saved?.phone && saved?.code) {
-      setUser(saved);
-      // Splash toujours visible brièvement, puis → chat directement
-      setTimeout(() => setScreen("chat"), 1800);
-    }
+    if (saved?.phone && saved?.code) setUser(saved);
   }, []);
 
   const handleLogin = (u) => {
@@ -1755,7 +1751,11 @@ export default function App() {
     setScreen("login");
   };
 
-  if (screen === "splash")      return <SplashScreen onDone={() => setScreen(user ? "chat" : "login")} />;
+  // onDone lit sessionLoad() directement — évite le stale closure sur user
+  if (screen === "splash") return <SplashScreen onDone={() => {
+    const saved = sessionLoad();
+    setScreen(saved?.phone && saved?.code ? "chat" : "login");
+  }} />;
   if (screen === "login")       return <LoginScreen onLogin={handleLogin} onNavigate={nav} />;
   if (screen === "chat")        return <ChatScreen user={user} onNavigate={nav} />;
   if (screen === "quiz")        return <QuizScreen user={user} onNavigate={nav} />;
