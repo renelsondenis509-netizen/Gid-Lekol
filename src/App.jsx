@@ -1561,6 +1561,174 @@ function PaymentScreen({ onBack }) {
   );
 }
 
+
+// ─── GÉNÉRATION PDF RAPPORT ───────────────────────────────────────────────────
+async function generateAndSharePDF(school, stats) {
+  // Charger jsPDF dynamiquement depuis CDN
+  if (!window.jspdf) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const date = new Date().toLocaleDateString("fr-HT", { timeZone: "America/Port-au-Prince", day: "2-digit", month: "long", year: "numeric" });
+  const W = 210, margin = 18;
+
+  // ── Fond header ──
+  doc.setFillColor(10, 15, 46);
+  doc.rect(0, 0, W, 50, "F");
+
+  // ── Titre ──
+  doc.setTextColor(255, 107, 53);
+  doc.setFontSize(28);
+  doc.setFont("helvetica", "bold");
+  doc.text("GID NS4", margin, 22);
+
+  doc.setTextColor(147, 197, 253);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("Rapò Pèfòmans Etablisman", margin, 30);
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text(school.name, margin, 40);
+
+  doc.setTextColor(147, 197, 253);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Dat rapò : ${date}`, margin, 47);
+
+  // ── Section statistiques ──
+  let y = 62;
+  doc.setTextColor(30, 58, 138);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.text("STATISTIQUES GLOBALES", margin, y);
+  y += 2;
+  doc.setDrawColor(212, 0, 42);
+  doc.setLineWidth(0.8);
+  doc.line(margin, y, W - margin, y);
+  y += 8;
+
+  const statItems = [
+    { label: "Total Scans Réalisés",   val: String(stats.totalScans || 0) },
+    { label: "Élèves Actifs",           val: String(stats.totalStudents || 0) },
+    { label: "Scans Aujourd'hui",       val: String(stats.scansToday || 0) },
+    { label: "Quota Journalier",        val: `${school.dailyScans} scan/jour` },
+    { label: "Abonnement",             val: `${school.daysRemaining} jours restants` },
+    { label: "Matières Autorisées",     val: String(school.subjects.length) },
+    { label: "Limite Élèves",           val: String(school.maxStudents || "—") },
+  ];
+
+  statItems.forEach(({ label, val }, i) => {
+    const rowY = y + i * 9;
+    if (i % 2 === 0) {
+      doc.setFillColor(241, 245, 249);
+      doc.rect(margin - 2, rowY - 5, W - 2 * margin + 4, 8, "F");
+    }
+    doc.setTextColor(30, 30, 60);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(label, margin, rowY);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(212, 0, 42);
+    doc.text(val, W - margin, rowY, { align: "right" });
+  });
+
+  y += statItems.length * 9 + 10;
+
+  // ── Section matières scannées ──
+  const subjectEntries = Object.entries(stats.subjectBreakdown || {}).sort((a, b) => b[1] - a[1]);
+  if (subjectEntries.length > 0) {
+    doc.setTextColor(30, 58, 138);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text("MATIÈRES LES PLUS UTILISÉES", margin, y);
+    y += 2;
+    doc.setDrawColor(212, 0, 42);
+    doc.line(margin, y, W - margin, y);
+    y += 8;
+
+    const maxCount = Math.max(...subjectEntries.map(e => e[1]), 1);
+    const barW = W - 2 * margin - 40;
+    const colors = [[34,197,94],[59,130,246],[245,158,11],[168,85,247],[236,72,153],[20,184,166]];
+
+    subjectEntries.slice(0, 10).forEach(([sub, count], i) => {
+      const rowY = y + i * 11;
+      const pct = count / maxCount;
+      const [r, g, b] = colors[i % colors.length];
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(30, 30, 60);
+      doc.text(sub.length > 30 ? sub.slice(0,28)+"…" : sub, margin, rowY);
+      // Barre
+      doc.setFillColor(220, 230, 245);
+      doc.roundedRect(margin, rowY + 1.5, barW, 4, 1, 1, "F");
+      doc.setFillColor(r, g, b);
+      doc.roundedRect(margin, rowY + 1.5, barW * pct, 4, 1, 1, "F");
+      // Valeur
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(r, g, b);
+      doc.text(`${count}`, W - margin, rowY + 4.5, { align: "right" });
+    });
+
+    y += subjectEntries.slice(0,10).length * 11 + 8;
+  }
+
+  // ── Section matières autorisées ──
+  if (school.subjects && school.subjects.length > 0) {
+    doc.setTextColor(30, 58, 138);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text("MATIÈRES AUTORISÉES", margin, y);
+    y += 2;
+    doc.setDrawColor(212, 0, 42);
+    doc.line(margin, y, W - margin, y);
+    y += 8;
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(30, 30, 60);
+    school.subjects.forEach((sub, i) => {
+      doc.text(`• ${sub}`, margin + 3, y + i * 7);
+    });
+    y += school.subjects.length * 7 + 8;
+  }
+
+  // ── Pied de page ──
+  const footerY = 285;
+  doc.setFillColor(10, 15, 46);
+  doc.rect(0, footerY - 6, W, 20, "F");
+  doc.setTextColor(147, 197, 253);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("Gid NS4 — Asistan IA pou Elèv NS4 Haïti", W / 2, footerY, { align: "center" });
+  doc.setTextColor(255, 107, 53);
+  doc.text(`Généré le ${date}`, W / 2, footerY + 5, { align: "center" });
+
+  // ── Téléchargement ──
+  const filename = `GidNS4_Rapport_${school.name.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0,10)}.pdf`;
+  doc.save(filename);
+
+  // ── Partage WhatsApp ──
+  const msg = encodeURIComponent(
+    `📊 *Rapò Gid NS4 — ${school.name}*\n` +
+    `📅 ${date}\n\n` +
+    `🔍 Total scans : ${stats.totalScans || 0}\n` +
+    `👥 Élèves actifs : ${stats.totalStudents || 0}\n` +
+    `📅 Scans jodi : ${stats.scansToday || 0}\n` +
+    `⏳ ${school.daysRemaining} jou rete\n\n` +
+    `_Rapò PDF téléchargé — Gid NS4_`
+  );
+  window.open(`https://wa.me/?text=${msg}`, "_blank");
+}
+
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 function DashboardScreen({ onBack, userCode }) {
   const [dirCode, setDirCode]       = useState("");
@@ -1615,7 +1783,7 @@ function DashboardScreen({ onBack, userCode }) {
           <h2 className="text-white font-bold">Dashboard</h2>
           <p className="text-blue-400 text-xs">{school.name}</p>
         </div>
-        <button className="px-3 py-2 rounded-xl text-xs font-bold text-white" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>📄 PDF</button>
+        <button onClick={() => generateAndSharePDF(school, s)} className="px-3 py-2 rounded-xl text-xs font-bold text-white active:scale-95 transition-transform" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>📄 PDF</button>
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <div className="rounded-2xl px-4 py-3 flex justify-between items-center"
@@ -1672,9 +1840,10 @@ function DashboardScreen({ onBack, userCode }) {
             </div>
           </div>
         )}
-        <button className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
+        <button onClick={() => generateAndSharePDF(school, s)}
+          className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3 active:scale-95 transition-transform"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span>💬</span> Pataje Rapò PDF sou WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Pataje Rapò PDF sou WhatsApp
         </button>
       </div>
     </div>
