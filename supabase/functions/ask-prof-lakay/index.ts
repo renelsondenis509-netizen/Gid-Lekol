@@ -124,7 +124,7 @@ export async function validateCode(
     { onConflict: "phone,school_code" }
   );
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleString("sv-SE", { timeZone: "America/Port-au-Prince" }).split(" ")[0];
   const { count: scansToday } = await db
     .from("scans")
     .select("*", { count: "exact", head: true })
@@ -185,7 +185,7 @@ export async function processAsk(
     };
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleString("sv-SE", { timeZone: "America/Port-au-Prince" }).split(" ")[0];
   const { count: scansToday } = await db
     .from("scans")
     .select("*", { count: "exact", head: true })
@@ -343,7 +343,7 @@ export async function processDashboard(
     throw { status: 403, error: "Kòd direktè a pa kòrèk." };
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleString("sv-SE", { timeZone: "America/Port-au-Prince" }).split(" ")[0];
 
   const [
     { count: totalStudents },
