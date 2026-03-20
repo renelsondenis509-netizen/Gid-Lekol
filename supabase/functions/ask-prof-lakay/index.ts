@@ -403,7 +403,7 @@ async function getPaymentNumbers(db: ReturnType<typeof createClient>) {
   return {
     payments: data ?? [
       { method: "MonCash", number: "50948695079" },
-      { method: "NatCash", number: "50948695079" },
+      { method: "NatCash", number: "50940669105" },
     ],
   };
 }
