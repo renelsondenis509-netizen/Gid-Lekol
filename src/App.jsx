@@ -702,6 +702,7 @@ function QuizScreen({ user, onNavigate }) {
       await callEdge({
         action: "save_quiz_score",
         phone: user.phone, schoolCode: user.code,
+        name: user.name || user.phone,
         subject, score: finalScore, total: finalTotal,
         note20, streak: finalStreak,
       });
@@ -969,7 +970,7 @@ function QuizScreen({ user, onNavigate }) {
           </div>
 
           {/* Question */}
-          <p className="text-white font-bold text-center text-lg">Veux-tu kontinye ?</p>
+          <p className="text-white font-bold text-center text-lg">Ou vle kontinye ?</p>
 
           {/* Boutons */}
           <div className="flex gap-3">
@@ -1154,7 +1155,7 @@ function LeaderboardScreen({ user, onNavigate }) {
                   <div className="text-2xl mb-1">🥈</div>
                   <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
                     style={{ background: "#94a3b822", border: "1px solid #94a3b844", height: 80 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[1].phone}</div>
+                    <div className="text-white font-bold text-xs text-center">{board[1].name || board[1].phone}</div>
                     <div className="font-black mt-1" style={{ color: "#94a3b8" }}>{board[1].value}{currentTab.valueLabel}</div>
                   </div>
                 </div>
@@ -1163,7 +1164,7 @@ function LeaderboardScreen({ user, onNavigate }) {
                   <div className="text-3xl mb-1">🥇</div>
                   <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
                     style={{ background: "#fbbf2422", border: "1px solid #fbbf2444", height: 100 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[0].phone}</div>
+                    <div className="text-white font-bold text-xs text-center">{board[0].name || board[0].phone}</div>
                     <div className="font-black text-lg mt-1" style={{ color: "#fbbf24" }}>{board[0].value}{currentTab.valueLabel}</div>
                     {board[0].isMe && <div className="text-xs mt-1" style={{ color: "#fbbf24" }}>← Ou</div>}
                   </div>
@@ -1173,7 +1174,7 @@ function LeaderboardScreen({ user, onNavigate }) {
                   <div className="text-2xl mb-1">🥉</div>
                   <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
                     style={{ background: "#cd7c3222", border: "1px solid #cd7c3244", height: 65 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[2].phone}</div>
+                    <div className="text-white font-bold text-xs text-center">{board[2].name || board[2].phone}</div>
                     <div className="font-black mt-1" style={{ color: "#cd7c32" }}>{board[2].value}{currentTab.valueLabel}</div>
                   </div>
                 </div>
@@ -1198,7 +1199,7 @@ function LeaderboardScreen({ user, onNavigate }) {
                   {/* Téléphone masqué */}
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-white font-semibold text-sm font-mono">{entry.phone}</span>
+                      <span className="text-white font-semibold text-sm font-mono">{entry.name || entry.phone}</span>
                       {entry.isMe && (
                         <span className="px-2 py-0.5 rounded-full text-xs font-bold"
                           style={{ background: "#1a4fd6", color: "white" }}>Ou</span>
@@ -1473,7 +1474,7 @@ function PaymentScreen({ onBack }) {
   useEffect(() => {
     callEdge({ action: "get_payment_numbers" })
       .then(d => setPayments(d.payments || []))
-      .catch(() => setPayments([{ method: "MonCash", number: "509-XXXX-XXXX" }, { method: "NatCash", number: "509-XXXX-XXXX" }]))
+      .catch(() => setPayments([{ method: "MonCash", number: "50948695079" }, { method: "NatCash", number: "50940669105" }]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -1832,7 +1833,7 @@ function PartnerScreen({ onBack }) {
         <div className="rounded-3xl px-6 py-6" style={{ background: "linear-gradient(135deg,#1a1a5e,#2a2a8e)", border: "1px solid #3b82f633" }}>
           <div className="text-5xl mb-4">🏫</div>
           <h3 className="text-white font-black text-xl mb-2">Ofri Aksè Ilimite a Elèv Ou Yo</h3>
-          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare Bak NS4 yo.</p>
+          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare egzamen NS4 yo.</p>
         </div>
         {[
           { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
