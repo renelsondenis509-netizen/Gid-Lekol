@@ -1818,7 +1818,7 @@ function PartnerScreen({ onBack }) {
         <div className="rounded-3xl px-6 py-6" style={{ background: "linear-gradient(135deg,#1a1a5e,#2a2a8e)", border: "1px solid #3b82f633" }}>
           <div className="text-5xl mb-4">🏫</div>
           <h3 className="text-white font-black text-xl mb-2">Ofri Aksè Ilimite a Elèv Ou Yo</h3>
-          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare Bak NS4 yo.</p>
+          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare egzamen NS4 yo.</p>
         </div>
         {[
           { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
