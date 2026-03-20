@@ -773,8 +773,22 @@ function QuizScreen({ user, onNavigate }) {
 
 
 
-  const icons = ["📗","⚗️","⚡","📖","🌍","✍️","📚"];
-  const allIcons = Object.keys(QUIZ_DATA).reduce((acc, s, i) => { acc[s] = icons[i % icons.length]; return acc; }, {});
+  const allIcons = {
+    "SVT (Sciences de la Vie et de la Terre)": "🧬",
+    "Physique":                                "⚡",
+    "Chimie":                                  "⚗️",
+    "Philosophie & Dissertation":              "🧠",
+    "Sciences Sociales & Citoyenneté":         "🌍",
+    "Littérature Haïtienne":                   "🇭🇹",
+    "Littérature Française":                   "🗼",
+    "Mathématiques":                           "📐",
+    "Kreyòl Ayisyen":                          "🗣️",
+    "Art & Mizik Ayisyen":                     "🎵",
+    "Anglais":                                 "🇬🇧",
+    "Espagnol":                                "🇪🇸",
+    "Entrepreneuriat Scolaire":                "💼",
+    "Informatique, Technologie & Arts":        "💻",
+  };
 
   // ── SELECT ──
   if (phase === "select") return (
@@ -902,7 +916,7 @@ function QuizScreen({ user, onNavigate }) {
             <button onClick={handleNext}
               className="w-full py-4 rounded-2xl font-bold text-white active:scale-95 transition-transform"
               style={{ background: hearts <= 0 ? "linear-gradient(135deg,#d4002a,#ef4444)" : "linear-gradient(135deg,#1a4fd6,#2563eb)" }}>
-              {hearts <= 0 ? "💔 Wè Rezilta" : "Kesyon Aprè →"}
+              {hearts <= 0 ? "💔 Wè Rezilta" : "Kesyon Suivant →"}
             </button>
           </div>
         )}
@@ -944,7 +958,7 @@ function QuizScreen({ user, onNavigate }) {
             {[
               { icon: "✅", val: score,     label: "Total kòrèk" },
               { icon: "🔥", val: maxStreak, label: "Max streak" },
-              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Questions vues" },
+              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Kesyon vues" },
             ].map((s, i) => (
               <div key={i} className="rounded-2xl p-3 text-center" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
                 <div style={{ fontSize: 18 }}>{s.icon}</div>
@@ -955,7 +969,7 @@ function QuizScreen({ user, onNavigate }) {
           </div>
 
           {/* Question */}
-          <p className="text-white font-bold text-center text-lg">Ou vle kontinye ?</p>
+          <p className="text-white font-bold text-center text-lg">Veux-tu kontinye ?</p>
 
           {/* Boutons */}
           <div className="flex gap-3">
@@ -1124,7 +1138,7 @@ function LeaderboardScreen({ user, onNavigate }) {
         {!loading && !error && board?.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 space-y-3">
             <span style={{ fontSize: 56 }}>📊</span>
-            <p className="text-blue-400 text-center text-sm">Pa gen done ankò.<br />Fè kèk quiz pou parèt nan klasman an !</p>
+            <p className="text-blue-400 text-center text-sm">Pa gen done encore.<br />Fè kèk quiz pou parèt nan klasman an !</p>
             <button onClick={() => onNavigate("quiz")} className="px-6 py-3 rounded-xl font-bold text-white text-sm"
               style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>→ Ale nan Quiz</button>
           </div>
@@ -1459,7 +1473,7 @@ function PaymentScreen({ onBack }) {
   useEffect(() => {
     callEdge({ action: "get_payment_numbers" })
       .then(d => setPayments(d.payments || []))
-      .catch(() => setPayments([{ method: "MonCash", number: "50948695079" }, { method: "NatCash", number: "50940669105" }]))
+      .catch(() => setPayments([{ method: "MonCash", number: "509-XXXX-XXXX" }, { method: "NatCash", number: "509-XXXX-XXXX" }]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -1510,7 +1524,7 @@ function PaymentScreen({ onBack }) {
         <button onClick={() => window.open("https://wa.me/50900000000?text=Bonjou%2C%20mwen%20vle%20aktive%20Gid%20NS4.", "_blank")}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman sou WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman via WhatsApp
         </button>
       </div>
     </div>
@@ -1818,7 +1832,7 @@ function PartnerScreen({ onBack }) {
         <div className="rounded-3xl px-6 py-6" style={{ background: "linear-gradient(135deg,#1a1a5e,#2a2a8e)", border: "1px solid #3b82f633" }}>
           <div className="text-5xl mb-4">🏫</div>
           <h3 className="text-white font-black text-xl mb-2">Ofri Aksè Ilimite a Elèv Ou Yo</h3>
-          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare egzamen NS4 yo.</p>
+          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare Bak NS4 yo.</p>
         </div>
         {[
           { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
@@ -1826,7 +1840,7 @@ function PartnerScreen({ onBack }) {
           { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
           { icon:"📚", title:"Matières Seleksyone", desc:"Aktive sèlman matières ou peye a" },
           { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv wè pwogresyon yo pa rapò a lòt yo" },
-          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje" },
+          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje, jamè nan APK" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
             <span style={{ fontSize: 26 }}>{f.icon}</span>
