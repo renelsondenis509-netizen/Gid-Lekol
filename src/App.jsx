@@ -944,7 +944,7 @@ function QuizScreen({ user, onNavigate }) {
             {[
               { icon: "✅", val: score,     label: "Total kòrèk" },
               { icon: "🔥", val: maxStreak, label: "Max streak" },
-              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Kesyon vues" },
+              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Questions vues" },
             ].map((s, i) => (
               <div key={i} className="rounded-2xl p-3 text-center" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
                 <div style={{ fontSize: 18 }}>{s.icon}</div>
@@ -955,7 +955,7 @@ function QuizScreen({ user, onNavigate }) {
           </div>
 
           {/* Question */}
-          <p className="text-white font-bold text-center text-lg">Veux-tu kontinye ?</p>
+          <p className="text-white font-bold text-center text-lg">Ou vle kontinye ?</p>
 
           {/* Boutons */}
           <div className="flex gap-3">
