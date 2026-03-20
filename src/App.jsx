@@ -1839,9 +1839,9 @@ function PartnerScreen({ onBack }) {
           { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
           { icon:"🎛️", title:"Quota Modifyab", desc:"Chwazi 3, 5 oswa 10 scan pa jou" },
           { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
-          { icon:"📚", title:"Matières Seleksyone", desc:"Aktive sèlman matières ou peye a" },
+          { icon:"📚", title:"Matières Seleksyone", desc:"Aktive matières" },
           { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv wè pwogresyon yo pa rapò a lòt yo" },
-          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje, jamè nan APK" },
+          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
             <span style={{ fontSize: 26 }}>{f.icon}</span>
