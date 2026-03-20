@@ -247,9 +247,10 @@ export async function saveQuizScore(
     total: number;
     note20: number;
     streak: number;
+    name?: string;
   }
 ) {
-  const { phone, schoolCode, subject, score, total, note20, streak } = body;
+  const { phone, schoolCode, subject, score, total, note20, streak, name } = body;
 
   await db.from("quiz_scores").insert({
     phone,
@@ -259,6 +260,7 @@ export async function saveQuizScore(
     total,
     note20,
     streak,
+    name: name || phone,
     week: getWeekKey(),
     created_at: new Date().toISOString(),
   });
@@ -277,7 +279,7 @@ export async function getLeaderboard(
   // ── 1. Meilleure note /20 par élève (max de toutes ses notes) ──
   const { data: allScores } = await db
     .from("quiz_scores")
-    .select("phone, note20, score, total, subject")
+    .select("phone, name, note20, score, total, subject")
     .eq("school_code", schoolCode);
 
   // ── 2. Total bonnes réponses par élève ──
@@ -307,6 +309,12 @@ export async function getLeaderboard(
   });
 
   // ── Formater et trier les classements ──
+  // Map phone -> name
+  const nameMap: Record<string, string> = {};
+  (allScores ?? []).forEach((row: any) => {
+    if (row.name) nameMap[row.phone] = row.name;
+  });
+
   const formatBoard = (map: Record<string, number>, myPhone: string) =>
     Object.entries(map)
       .sort((a, b) => b[1] - a[1])
@@ -314,6 +322,7 @@ export async function getLeaderboard(
       .map(([p, val], i) => ({
         rank:     i + 1,
         phone:    maskPhone(p),
+        name:     nameMap[p] || maskPhone(p),
         isMe:     p === myPhone,
         value:    val,
       }));
