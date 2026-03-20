@@ -1459,7 +1459,7 @@ function PaymentScreen({ onBack }) {
   useEffect(() => {
     callEdge({ action: "get_payment_numbers" })
       .then(d => setPayments(d.payments || []))
-      .catch(() => setPayments([{ method: "MonCash", number: "509-4869-5079" }, { method: "NatCash", number: "509-4066-9105" }]))
+      .catch(() => setPayments([{ method: "MonCash", number: "50948695079" }, { method: "NatCash", number: "50940669105" }]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -1826,7 +1826,7 @@ function PartnerScreen({ onBack }) {
           { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
           { icon:"📚", title:"Matières Seleksyone", desc:"Aktive sèlman matières ou peye a" },
           { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv wè pwogresyon yo pa rapò a lòt yo" },
-          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje, jamè nan APK" },
+          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
             <span style={{ fontSize: 26 }}>{f.icon}</span>
