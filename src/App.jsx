@@ -322,23 +322,44 @@ function MdText({ text }) {
 function SplashScreen({ onDone }) {
   useEffect(() => { setTimeout(onDone, 2000); }, []);
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b,#1a0505)" }}>
-      <div style={{ animation: "popIn .6s cubic-bezier(.34,1.56,.64,1) both" }}>
-        <div className="mb-5 mx-auto" style={{
-            width: 120, height: 120,
-            borderRadius: "26px",
-            background: "#fff",
-            boxShadow: "0 0 0 2px #3b82f655, 0 0 40px #3b82f644, 0 8px 32px #000a",
-            overflow: "hidden",
-            display: "flex", alignItems: "center", justifyContent: "center",
+    <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden"
+      style={{ background: "linear-gradient(145deg,#04081A 0%,#080E24 50%,#0D0A1E 100%)" }}>
+      {/* Ambient glows */}
+      <div style={{ position:"absolute", width:320, height:320, borderRadius:"50%", background:"radial-gradient(circle,#2563EB18,transparent 70%)", top:"15%", left:"10%", pointerEvents:"none" }} />
+      <div style={{ position:"absolute", width:240, height:240, borderRadius:"50%", background:"radial-gradient(circle,#E8002A14,transparent 70%)", bottom:"20%", right:"5%", pointerEvents:"none" }} />
+      
+      <div style={{ animation: "popIn .7s cubic-bezier(.34,1.56,.64,1) both", display:"flex", flexDirection:"column", alignItems:"center" }}>
+        {/* Logo avec ring animé */}
+        <div style={{ position:"relative", marginBottom:24 }}>
+          <div style={{
+            position:"absolute", inset:-8,
+            borderRadius:34, border:"2px solid #2563EB44",
+            animation:"ringPulse 2s 1s ease-out infinite"
+          }} />
+          <div style={{
+            width:120, height:120, borderRadius:26,
+            background:"#fff",
+            boxShadow:"0 0 0 1px #2563EB33, 0 8px 40px #000c, 0 0 60px #2563EB22",
+            overflow:"hidden",
           }}>
-          <img src={APP_LOGO} alt="Gid NS4"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
+          </div>
         </div>
-        <p className="text-center text-blue-300 mt-1 text-sm tracking-widest uppercase">Prof Lakay • NS4 Haïti</p>
+        <p style={{ color:"#5B7ADB", fontSize:11, letterSpacing:"0.2em", textTransform:"uppercase", animation:"fadeUp .5s .5s both" }}>
+          Prof Lakay • NS4 Haïti
+        </p>
       </div>
-      <div className="absolute bottom-12 flex gap-2">
-        {[0,1,2].map(i => <div key={i} className="w-2 h-2 rounded-full bg-blue-400" style={{ animation: `pulse 1s ${i*0.2}s infinite` }} />)}
+
+      {/* Loader elegant */}
+      <div style={{ position:"absolute", bottom:52, display:"flex", gap:6, alignItems:"center" }}>
+        {[0,1,2,3,4].map(i => (
+          <div key={i} style={{
+            width: i === 2 ? 20 : 6, height:6, borderRadius:3,
+            background: i === 2 ? "linear-gradient(90deg,#E8002A,#FF5C35)" : "#1E3A8A",
+            animation:`pulse 1.2s ${i*0.15}s ease-in-out infinite`,
+            transition:"width .3s"
+          }} />
+        ))}
       </div>
       <style>{`
         @keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
@@ -387,57 +408,82 @@ function LoginScreen({ onLogin, onNavigate }) {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b,#1a0505)" }}>
-      <div className="flex-1 flex flex-col items-center justify-center px-6">
-        <div className="mb-4 mx-auto" style={{
-            width: 84, height: 84,
-            borderRadius: "20px",
-            background: "#fff",
-            boxShadow: "0 0 0 1.5px #3b82f644, 0 4px 20px #000a",
-            overflow: "hidden",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-          <img src={APP_LOGO} alt="Gid NS4"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <div className="fixed inset-0 flex flex-col overflow-hidden"
+      style={{ background: "linear-gradient(145deg,#04081A 0%,#080E24 60%,#0D0A1E 100%)" }}>
+      {/* Background glows */}
+      <div style={{ position:"absolute", width:400, height:400, borderRadius:"50%", background:"radial-gradient(circle,#2563EB0F,transparent 65%)", top:"-10%", right:"-20%", pointerEvents:"none" }} />
+      <div style={{ position:"absolute", width:300, height:300, borderRadius:"50%", background:"radial-gradient(circle,#E8002A0A,transparent 65%)", bottom:"0%", left:"-15%", pointerEvents:"none" }} />
+
+      <div className="flex-1 flex flex-col items-center justify-center px-5" style={{ animation:"fadeUp .5s ease both" }}>
+        {/* Logo */}
+        <div style={{ width:80, height:80, borderRadius:20, background:"#fff", overflow:"hidden", boxShadow:"0 0 0 1px #2563EB22, 0 12px 40px #00000055", marginBottom:14 }}>
+          <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
-        <p className="text-blue-300 text-xs mb-6 tracking-wider">Asistan IA pou elèv NS4</p>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-6" style={{ background: "#14532d33", border: "1px solid #22c55e33" }}>
-          <span>🔒</span>
-          <span className="text-green-300 text-xs font-medium">Koneksyon sécurisé • Données protégées</span>
-        </div>
-        <div className="w-full max-w-sm space-y-4">
-          <div>
-            <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-1.5 block">👤 Non Konplè</label>
-            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ex: Marie Joseph"
-              className="w-full rounded-xl px-4 py-3.5 text-white placeholder-blue-800 font-medium outline-none"
-              style={{ background: "#ffffff0d", border: "1.5px solid #ffffff18" }} />
-          </div>
-          <div>
-            <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-1.5 block">📱 Nimewo Telefòn</label>
-            <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Ex: 50934567890"
-              className="w-full rounded-xl px-4 py-3.5 text-white placeholder-blue-800 font-medium outline-none"
-              style={{ background: "#ffffff0d", border: "1.5px solid #ffffff18" }} />
-          </div>
-          <div>
-            <label className="text-blue-300 text-xs font-semibold tracking-wider uppercase mb-1.5 block">🔑 Kòd Etablisman</label>
-            <input type="text" value={code} onChange={e => setCode(e.target.value.toUpperCase())} placeholder="Ex: DEMO-2026"
-              className="w-full rounded-xl px-4 py-3.5 text-white placeholder-blue-800 font-mono font-bold outline-none tracking-widest"
-              style={{ background: "#ffffff0d", border: "1.5px solid #ffffff18" }} />
-          </div>
+        <p style={{ color:"#4B6ABA", fontSize:11, letterSpacing:"0.18em", textTransform:"uppercase", marginBottom:24 }}>Asistan IA pou elèv NS4</p>
+
+        {/* Glass Card */}
+        <div className="w-full" style={{
+          maxWidth:380,
+          background:"rgba(12,21,48,0.8)",
+          backdropFilter:"blur(20px)",
+          border:"1px solid rgba(255,255,255,0.08)",
+          borderRadius:24,
+          padding:"28px 24px",
+          boxShadow:"0 24px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)"
+        }}>
+          {/* Inputs */}
+          {[
+            { label:"Non Konplè", type:"text", val:name, fn:e=>setName(e.target.value), ph:"Marie Joseph", extra:{} },
+            { label:"Nimewo Telefòn", type:"tel", val:phone, fn:e=>setPhone(e.target.value), ph:"50934567890", extra:{} },
+            { label:"Kòd Etablisman", type:"text", val:code, fn:e=>setCode(e.target.value.toUpperCase()), ph:"DEMO-2026", extra:{fontFamily:"monospace", letterSpacing:"0.12em", fontWeight:700} },
+          ].map(({label, type, val, fn, ph, extra}, i) => (
+            <div key={i} style={{ marginBottom:16 }}>
+              <label style={{ display:"block", color:"#5B7ADB", fontSize:11, fontWeight:600, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:8 }}>{label}</label>
+              <input type={type} value={val} onChange={fn} placeholder={ph}
+                style={{
+                  width:"100%", background:"rgba(255,255,255,0.04)",
+                  border:"1px solid rgba(255,255,255,0.1)",
+                  borderRadius:12, padding:"13px 16px",
+                  color:"#E8EEFF", fontSize:15, outline:"none",
+                  transition:"border-color .2s, box-shadow .2s",
+                  boxSizing:"border-box",
+                  ...extra
+                }}
+                onFocus={e => { e.target.style.borderColor="#2563EB66"; e.target.style.boxShadow="0 0 0 3px #2563EB18"; }}
+                onBlur={e => { e.target.style.borderColor="rgba(255,255,255,0.1)"; e.target.style.boxShadow="none"; }}
+              />
+            </div>
+          ))}
+
           {error && (
-            <div className="rounded-xl px-4 py-3 text-sm font-medium" style={{ background: "#d4002a22", border: "1px solid #d4002a55", color: "#ff8080" }}>⚠️ {error}</div>
+            <div style={{ background:"#E8002A15", border:"1px solid #E8002A33", borderRadius:10, padding:"10px 14px", marginBottom:16, color:"#FF7070", fontSize:13 }}>
+              ⚠️ {error}
+            </div>
           )}
+
           <button onClick={handleLogin} disabled={loading}
-            className="w-full rounded-xl py-4 font-black text-white flex items-center justify-center gap-2 active:scale-95 transition-transform"
-            style={{ background: loading ? "#333" : "linear-gradient(135deg,#d4002a,#ff6b35)", boxShadow: loading ? "none" : "0 4px 24px #d4002a44" }}>
-            {loading ? "⏳ Ap vérifier..." : "→ Konekte"}
+            style={{
+              width:"100%", padding:"15px", borderRadius:14,
+              background: loading ? "#1E2A4A" : "linear-gradient(135deg,#E8002A,#FF5C35)",
+              color:"white", fontWeight:800, fontSize:15, border:"none",
+              boxShadow: loading ? "none" : "0 6px 24px #E8002A33",
+              transition:"all .2s", cursor: loading ? "not-allowed" : "pointer",
+              letterSpacing:"0.02em"
+            }}>
+            {loading ? "⏳  Ap verifye..." : "Konekte  →"}
           </button>
+
+          <div style={{ textAlign:"center", marginTop:16 }}>
+            <span style={{ color:"#2A3A6A", fontSize:12 }}>Pa gen kòd ? </span>
+            <span style={{ color:"#4B6ABA", fontSize:12 }}>Pale ak direksyon lekòl ou a.</span>
+          </div>
         </div>
-        <p className="text-blue-900 text-xs mt-8 text-center">Pa gen kòd ? Pale ak direksyon lekòl ou a.</p>
       </div>
-      <div className="px-6 pb-6 flex justify-center gap-6">
-        <button onClick={() => onNavigate("payment")} className="text-blue-400 text-xs underline">Peman</button>
-        <button onClick={() => onNavigate("partner")} className="text-blue-400 text-xs underline">Vin Patnè</button>
+
+      <div style={{ paddingBottom:24, display:"flex", justifyContent:"center", gap:24 }}>
+        <button onClick={() => onNavigate("payment")} style={{ color:"#3B5BA8", fontSize:12, background:"none", border:"none" }}>Peman</button>
+        <span style={{ color:"#1E2A4A", fontSize:12 }}>·</span>
+        <button onClick={() => onNavigate("partner")} style={{ color:"#3B5BA8", fontSize:12, background:"none", border:"none" }}>Vin Patnè</button>
       </div>
     </div>
   );
@@ -453,15 +499,36 @@ function BottomNav({ active, onNavigate }) {
     { id: "menu",        icon: "☰",  label: "Menu" },
   ];
   return (
-    <div className="flex border-t" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-      {tabs.map(tab => (
-        <button key={tab.id} onClick={() => onNavigate(tab.id)}
-          className="flex-1 flex flex-col items-center py-2 gap-0.5 active:scale-90 transition-transform">
-          <span style={{ fontSize: 18 }}>{tab.icon}</span>
-          <span style={{ fontSize: 9, fontWeight: 600, color: active === tab.id ? "#ff6b35" : "#4b5ea8" }}>{tab.label}</span>
-          {active === tab.id && <div className="w-3 h-0.5 rounded-full" style={{ background: "#ff6b35" }} />}
-        </button>
-      ))}
+    <div style={{
+      display:"flex",
+      background:"rgba(4,8,26,0.92)",
+      backdropFilter:"blur(20px)",
+      borderTop:"1px solid rgba(255,255,255,0.06)",
+      paddingBottom:"env(safe-area-inset-bottom, 0px)",
+    }}>
+      {tabs.map(tab => {
+        const isActive = active === tab.id;
+        return (
+          <button key={tab.id} onClick={() => onNavigate(tab.id)}
+            style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", padding:"10px 0 8px", border:"none", background:"none", position:"relative", transition:"transform .15s" }}
+            onTouchStart={e => e.currentTarget.style.transform="scale(0.88)"}
+            onTouchEnd={e => e.currentTarget.style.transform="scale(1)"}>
+            {isActive && (
+              <div style={{
+                position:"absolute", top:0, left:"50%", transform:"translateX(-50%)",
+                width:32, height:2, borderRadius:2,
+                background:"linear-gradient(90deg,#E8002A,#FF5C35)",
+              }} />
+            )}
+            <span style={{ fontSize:18, filter: isActive ? "none" : "grayscale(0.3) opacity(0.5)" }}>{tab.icon}</span>
+            <span style={{
+              fontSize:9, fontWeight: isActive ? 700 : 500,
+              color: isActive ? "#FF5C35" : "#2E4080",
+              marginTop:2, letterSpacing:"0.03em"
+            }}>{tab.label}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -547,31 +614,42 @@ function ChatScreen({ user, onNavigate }) {
   const remaining = user.dailyScans - scans;
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       <ExpiryBanner daysRemaining={user.daysRemaining} />
-      <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-        <div style={{ width: 40, height: 40, borderRadius: 10, overflow: "hidden", flexShrink: 0, background: "#fff" }}>
-          <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 16px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ width:40, height:40, borderRadius:10, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 12px #00000044" }}>
+          <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
-        <div className="flex-1">
-          <div className="text-white font-bold text-sm">Prof Lakay</div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-green-400 text-xs">● En ligne</span>
-            <span className="text-green-600 text-xs">• 🔒 Sécurisé</span>
+        <div style={{ flex:1 }}>
+          <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:14, letterSpacing:"0.01em" }}>Prof Lakay</div>
+          <div style={{ display:"flex", alignItems:"center", gap:6, marginTop:1 }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:"#22C55E", display:"inline-block", boxShadow:"0 0 6px #22C55E" }} />
+            <span style={{ color:"#22C55E", fontSize:11, fontWeight:500 }}>En ligne</span>
           </div>
         </div>
-        <div className="text-right">
-          <div className={`text-xs font-bold ${remaining <= 0 ? "text-red-400" : remaining === 1 ? "text-orange-300" : "text-green-400"}`}>
-            {remaining} scan{remaining !== 1 ? "s" : ""} restant{remaining !== 1 ? "s" : ""}
-          </div>
-          <div className="text-blue-900 text-xs">/ {user.dailyScans} par jour</div>
+        <div style={{
+          padding:"5px 12px", borderRadius:20,
+          background: remaining <= 0 ? "#E8002A22" : remaining === 1 ? "#F59E0B22" : "#22C55E18",
+          border: `1px solid ${remaining <= 0 ? "#E8002A44" : remaining === 1 ? "#F59E0B44" : "#22C55E33"}`,
+        }}>
+          <span style={{ fontSize:12, fontWeight:700, color: remaining <= 0 ? "#FF6B6B" : remaining === 1 ? "#FBD04A" : "#4ADE80" }}>
+            {remaining}/{user.dailyScans}
+          </span>
+          <span style={{ fontSize:10, color:"#2E4080", marginLeft:3 }}>scans</span>
         </div>
       </div>
-      <div className="px-4 py-1.5 flex gap-1.5 overflow-x-auto" style={{ background: "#080e22", borderBottom: "1px solid #ffffff08" }}>
+      <div style={{ padding:"8px 14px", display:"flex", gap:8, overflowX:"auto", background:"rgba(4,8,26,0.85)", borderBottom:"1px solid rgba(255,255,255,0.05)", scrollbarWidth:"none" }}>
         {user.subjects.map((s, i) => (
           <button key={i} onClick={() => setActiveSubject(s)}
-            className="flex-shrink-0 px-2 py-0.5 rounded-full text-xs font-medium transition-all"
-            style={{ background: activeSubject === s ? "#1a4fd6" : "#1e3a8a33", color: activeSubject === s ? "#ffffff" : "#93c5fd", border: activeSubject === s ? "1px solid #3b82f6" : "1px solid #1e3a8a44" }}>
+            style={{
+              flexShrink:0, padding:"4px 11px", borderRadius:20,
+              background: activeSubject === s ? "linear-gradient(135deg,#2563EB,#3B82F6)" : "rgba(37,99,235,0.08)",
+              color: activeSubject === s ? "#fff" : "#4B6ABA",
+              border: activeSubject === s ? "none" : "1px solid rgba(37,99,235,0.2)",
+              fontSize:11, fontWeight: activeSubject === s ? 700 : 500,
+              boxShadow: activeSubject === s ? "0 3px 12px #2563EB33" : "none",
+              transition:"all .2s", whiteSpace:"nowrap"
+            }}>
             {s}
           </button>
         ))}
@@ -584,15 +662,18 @@ function ChatScreen({ user, onNavigate }) {
                 <span style={{ fontSize: 16 }}>🧑‍🏫</span>
               </div>
             )}
-            <div className="max-w-xs">
-              {msg.image && <img src={msg.image} alt="scan" className="rounded-xl mb-2 max-h-40 object-contain" style={{ border: "1px solid #ffffff20" }} />}
-              <div className="px-4 py-3 text-sm leading-relaxed"
-                style={{
-                  background: msg.role === "user" ? "linear-gradient(135deg,#1a4fd6,#2563eb)" : "#0f1e4a",
-                  border: msg.role === "assistant" ? "1px solid #1e3a8a33" : "none",
-                  color: "#e0e8ff",
-                  borderRadius: msg.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
-                }}>
+            <div style={{ maxWidth:"82%" }}>
+              {msg.image && <img src={msg.image} alt="scan" style={{ borderRadius:14, marginBottom:6, maxHeight:140, objectFit:"contain", border:"1px solid rgba(255,255,255,0.1)" }} />}
+              <div style={{
+                padding:"11px 15px", fontSize:14, lineHeight:1.65,
+                background: msg.role === "user"
+                  ? "linear-gradient(135deg,#2563EB,#1D4ED8)"
+                  : "rgba(12,21,48,0.95)",
+                border: msg.role === "assistant" ? "1px solid rgba(37,99,235,0.15)" : "none",
+                color:"#E8EEFF",
+                borderRadius: msg.role === "user" ? "18px 18px 5px 18px" : "5px 18px 18px 18px",
+                boxShadow: msg.role === "user" ? "0 4px 20px #2563EB33" : "0 2px 12px rgba(0,0,0,0.3)",
+              }}>
                 <LatexText content={msg.content} />
               </div>
             </div>
@@ -619,17 +700,17 @@ function ChatScreen({ user, onNavigate }) {
         <div ref={bottomRef} />
       </div>
       <ErrorToast error={apiError} onRetry={lastPayload ? () => sendMessage(lastPayload) : null} onDismiss={() => { setApiError(null); setLastPayload(null); }} />
-      <div className="px-3 py-3 border-t" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
+      <div style={{ padding:"10px 12px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
         {image && (
-          <div className="flex items-center gap-2 mb-2 px-2">
-            <img src={image} alt="" className="w-10 h-10 rounded-lg object-cover" />
-            <span className="text-blue-300 text-xs flex-1">✅ Image compressée et prête</span>
-            <button onClick={() => setImage(null)} className="text-red-400 text-lg">✕</button>
+          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8, padding:"6px 8px", background:"rgba(37,99,235,0.1)", borderRadius:10, border:"1px solid rgba(37,99,235,0.2)" }}>
+            <img src={image} alt="" style={{ width:36, height:36, borderRadius:8, objectFit:"cover" }} />
+            <span style={{ color:"#6B8ADB", fontSize:11, flex:1 }}>✅ Image prête</span>
+            <button onClick={() => setImage(null)} style={{ color:"#E8002A", background:"none", border:"none", fontSize:16, cursor:"pointer" }}>✕</button>
           </div>
         )}
-        <div className="flex gap-2 items-end">
+        <div style={{ display:"flex", gap:8, alignItems:"flex-end" }}>
           <button onClick={() => fileRef.current?.click()}
-            className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: "#1e3a8a" }}>
+            style={{ width:40, height:40, borderRadius:12, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", background:"rgba(37,99,235,0.15)", border:"1px solid rgba(37,99,235,0.25)", cursor:"pointer" }}>
             <span>📷</span>
           </button>
           <input ref={fileRef} type="file" accept="image/*" onChange={handleImage}
@@ -646,11 +727,19 @@ function ChatScreen({ user, onNavigate }) {
             placeholder={remaining <= 0 ? "Limit jou a rive..." : "Poze yon kesyon oswa analize yon egzèsis..."}
             rows={1} disabled={remaining <= 0}
             className="flex-1 rounded-xl px-4 py-3 text-sm outline-none resize-none"
-            style={{ background: "#ffffff0d", border: "1.5px solid #ffffff15", maxHeight: 80, color: "#e0e8ff" }} />
+            style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", maxHeight:80, color:"#E8EEFF", borderRadius:12, transition:"border-color .2s" }}
+            onFocus={e => e.target.style.borderColor="rgba(37,99,235,0.4)"}
+            onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.08)"} />
           <button onClick={() => sendMessage()} disabled={loading || remaining <= 0}
-            className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
-            style={{ background: (loading || remaining <= 0) ? "#1a1a2e" : "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-            <span>✈</span>
+            style={{
+              width:40, height:40, borderRadius:12, flexShrink:0,
+              display:"flex", alignItems:"center", justifyContent:"center",
+              background: (loading || remaining <= 0) ? "rgba(30,42,74,0.5)" : "linear-gradient(135deg,#E8002A,#FF5C35)",
+              border:"none", cursor: (loading || remaining <= 0) ? "not-allowed" : "pointer",
+              boxShadow: (loading || remaining <= 0) ? "none" : "0 4px 16px #E8002A33",
+              transition:"all .2s"
+            }}>
+            <span style={{ fontSize:16 }}>✈</span>
           </button>
         </div>
       </div>
@@ -793,47 +882,62 @@ function QuizScreen({ user, onNavigate }) {
 
   // ── SELECT ──
   if (phase === "select") return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
-      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
-        <div style={{ width: 38, height: 38, borderRadius: 9, overflow: "hidden", flexShrink: 0, background: "#fff" }}>
-          <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ width:38, height:38, borderRadius:9, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 10px #00000044" }}>
+          <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
         <div>
-          <h2 className="text-white font-bold">Quiz NS4</h2>
-          <p className="text-blue-400 text-xs">{availableSubjects.length} matière{availableSubjects.length > 1 ? "s" : ""} disponib</p>
+          <h2 style={{ color:"#E8EEFF", fontWeight:800, fontSize:15, margin:0 }}>Quiz NS4</h2>
+          <p style={{ color:"#4B6ABA", fontSize:11, margin:0, marginTop:1 }}>{availableSubjects.length} matière{availableSubjects.length > 1 ? "s" : ""} disponib</p>
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
         {/* Mode infini info */}
-        <div className="rounded-2xl px-4 py-3 flex items-center gap-3" style={{ background: "#1a4fd622", border: "1px solid #1a4fd644" }}>
-          <span style={{ fontSize: 20 }}>❤️❤️❤️</span>
+        <div style={{ background:"linear-gradient(135deg,rgba(232,0,42,0.12),rgba(255,92,53,0.08))", border:"1px solid rgba(232,0,42,0.2)", borderRadius:16, padding:"12px 16px", display:"flex", alignItems:"center", gap:12 }}>
+          <span style={{ fontSize:22 }}>❤️❤️❤️</span>
           <div>
-            <div className="text-white font-semibold text-xs">Mode Duolingo — 3 kè</div>
-            <div className="text-blue-400 text-xs">Kesyon enfini • Jwe jouk ou pèdi 3 kè</div>
+            <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:12 }}>Mode Duolingo — 3 kè</div>
+            <div style={{ color:"#5B7ADB", fontSize:11, marginTop:2 }}>Kesyon enfini • Jwe jouk ou pèdi 3 kè</div>
           </div>
         </div>
-        <p className="text-blue-600 text-xs text-center py-1">— Chwazi yon matière —</p>
+        <p style={{ color:"#2E4080", fontSize:11, textAlign:"center", padding:"4px 0", letterSpacing:"0.08em", textTransform:"uppercase" }}>— Chwazi yon matière —</p>
         {availableSubjects.map(sub => (
           <button key={sub} onClick={() => startQCM(sub)}
-            className="w-full px-5 py-4 rounded-2xl text-left flex items-center gap-4 active:scale-95 transition-transform"
-            style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
-            <span style={{ fontSize: 26 }}>{allIcons[sub]}</span>
-            <div className="flex-1">
-              <div className="text-white font-semibold text-sm">{sub}</div>
-              <div className="text-blue-500 text-xs">{QUIZ_DATA[sub].length} kesyon • Mode infini 🔄</div>
+            style={{
+              width:"100%", padding:"14px 16px", borderRadius:16, textAlign:"left",
+              display:"flex", alignItems:"center", gap:14, border:"none",
+              background:"rgba(12,21,48,0.9)", border:"1px solid rgba(37,99,235,0.12)",
+              boxShadow:"0 2px 12px rgba(0,0,0,0.2)", cursor:"pointer",
+              transition:"all .2s", animation:"slideIn .3s ease both",
+            }}
+            onTouchStart={e => { e.currentTarget.style.transform="scale(0.97)"; e.currentTarget.style.borderColor="rgba(37,99,235,0.4)"; }}
+            onTouchEnd={e => { e.currentTarget.style.transform="scale(1)"; e.currentTarget.style.borderColor="rgba(37,99,235,0.12)"; }}>
+            <div style={{ width:44, height:44, borderRadius:12, background:"rgba(37,99,235,0.12)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+              <span style={{ fontSize:24 }}>{allIcons[sub]}</span>
             </div>
-            <span className="text-blue-600 text-xl">›</span>
+            <div style={{ flex:1 }}>
+              <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:13 }}>{sub}</div>
+              <div style={{ color:"#2E4080", fontSize:11, marginTop:3 }}>{QUIZ_DATA[sub].length} kesyon • Mode infini 🔄</div>
+            </div>
+            <span style={{ color:"#2E4080", fontSize:18 }}>›</span>
           </button>
         ))}
         {Object.keys(QUIZ_DATA).filter(s => !user.subjects.includes(s)).map(sub => (
-          <div key={sub} className="w-full px-5 py-4 rounded-2xl flex items-center gap-4 opacity-30"
-            style={{ background: "#0f1e4a", border: "1px solid #1e3a8a22" }}>
-            <span style={{ fontSize: 26 }}>{allIcons[sub]}</span>
-            <div className="flex-1">
-              <div className="text-white font-semibold text-sm">{sub}</div>
-              <div className="text-blue-700 text-xs">Pa disponib ak kòd lekòl ou</div>
+          <div key={sub} style={{
+            width:"100%", padding:"14px 16px", borderRadius:16,
+            display:"flex", alignItems:"center", gap:14,
+            background:"rgba(12,21,48,0.4)", border:"1px solid rgba(37,99,235,0.05)",
+            opacity:0.3, boxSizing:"border-box"
+          }}>
+            <div style={{ width:44, height:44, borderRadius:12, background:"rgba(37,99,235,0.06)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+              <span style={{ fontSize:22 }}>{allIcons[sub]}</span>
             </div>
-            <span className="text-blue-800">🔒</span>
+            <div style={{ flex:1 }}>
+              <div style={{ color:"#E8EEFF", fontWeight:600, fontSize:13 }}>{sub}</div>
+              <div style={{ color:"#2E4080", fontSize:11, marginTop:2 }}>Pa disponib ak kòd lekòl ou</div>
+            </div>
+            <span style={{ fontSize:14 }}>🔒</span>
           </div>
         ))}
       </div>
@@ -845,9 +949,9 @@ function QuizScreen({ user, onNavigate }) {
 
   // ── QCM (Mode Duolingo) ──
   if (phase === "qcm" && currentQ) return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header avec cœurs + streak */}
-      <div className="px-4 py-3 border-b" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-3 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-2">
           <button onClick={() => setPhase("select")} className="text-blue-400 text-xl">←</button>
           <h2 className="text-white font-bold flex-1 text-sm">{subject}</h2>
@@ -878,27 +982,45 @@ function QuizScreen({ user, onNavigate }) {
       </div>
 
       <div className="flex-1 px-4 py-5 flex flex-col gap-4 overflow-y-auto">
-        <div className="rounded-2xl px-5 py-5" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
-          <p className="text-white font-semibold text-base leading-relaxed">{currentQ.q}</p>
+        <div style={{ background:"rgba(12,21,48,0.95)", border:"1px solid rgba(37,99,235,0.15)", borderRadius:18, padding:"18px 18px", boxShadow:"0 4px 24px rgba(0,0,0,0.3)" }}>
+          <p style={{ color:"#E8EEFF", fontWeight:600, fontSize:15, lineHeight:1.6, margin:0 }}>{currentQ.q}</p>
         </div>
         <div className="space-y-3">
           {currentQ.choices.map((choice, idx) => {
-            let bg = "#0f1e4a", border = "#1e3a8a33", color = "#e0e8ff";
-            if (selected !== null) {
-              if (idx === currentQ.answer) { bg = "#14532d33"; border = "#22c55e66"; color = "#86efac"; }
-              else if (idx === selected) { bg = "#7f1d1d33"; border = "#ef444466"; color = "#fca5a5"; }
-            }
+            const isCorrect = selected !== null && idx === currentQ.answer;
+            const isWrong   = selected !== null && idx === selected && idx !== currentQ.answer;
+            const isNeutral = selected === null;
+            const letters   = ["A","B","C","D"];
+            const letterColors = ["#2563EB","#7C3AED","#059669","#D97706"];
             return (
               <button key={idx} onClick={() => handleChoice(idx)}
-                className="w-full px-5 py-4 rounded-2xl text-left font-medium text-sm flex items-center gap-3 active:scale-95 transition-all"
-                style={{ background: bg, border: `1.5px solid ${border}`, color }}>
-                <span className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0"
-                  style={{ background: selected !== null && idx === currentQ.answer ? "#22c55e" : selected === idx ? "#ef4444" : "#1e3a8a", color: "white" }}>
-                  {["A","B","C","D"][idx]}
+                style={{
+                  width:"100%", padding:"14px 16px", borderRadius:14, textAlign:"left",
+                  display:"flex", alignItems:"center", gap:12,
+                  background: isCorrect ? "rgba(34,197,94,0.12)" : isWrong ? "rgba(239,68,68,0.1)" : "rgba(12,21,48,0.9)",
+                  border: `1.5px solid ${isCorrect ? "rgba(34,197,94,0.5)" : isWrong ? "rgba(239,68,68,0.4)" : "rgba(37,99,235,0.12)"}`,
+                  color: isCorrect ? "#4ADE80" : isWrong ? "#FC8181" : "#E8EEFF",
+                  cursor: selected !== null ? "default" : "pointer",
+                  transform: isNeutral ? "none" : "none",
+                  transition:"all .2s",
+                  animation: `fadeIn .2s ${idx*0.05}s ease both`,
+                  fontSize:14, fontWeight:500,
+                  boxShadow: isCorrect ? "0 4px 20px rgba(34,197,94,0.15)" : isWrong ? "0 4px 20px rgba(239,68,68,0.1)" : "none"
+                }}
+                onTouchStart={e => { if(selected===null) e.currentTarget.style.transform="scale(0.97)"; }}
+                onTouchEnd={e => { e.currentTarget.style.transform="scale(1)"; }}>
+                <span style={{
+                  width:28, height:28, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center",
+                  fontWeight:800, fontSize:12, flexShrink:0,
+                  background: isCorrect ? "#22C55E" : isWrong ? "#EF4444" : `${letterColors[idx]}22`,
+                  color: isCorrect || isWrong ? "white" : letterColors[idx],
+                  border: `1px solid ${isCorrect ? "#22C55E" : isWrong ? "#EF4444" : `${letterColors[idx]}44`}`
+                }}>
+                  {letters[idx]}
                 </span>
-                {choice}
-                {selected !== null && idx === currentQ.answer && <span className="ml-auto">✅</span>}
-                {selected !== null && idx === selected && idx !== currentQ.answer && <span className="ml-auto">❌</span>}
+                <span style={{ flex:1, lineHeight:1.4 }}>{choice}</span>
+                {isCorrect && <span style={{ fontSize:16, flexShrink:0 }}>✅</span>}
+                {isWrong && <span style={{ fontSize:16, flexShrink:0 }}>❌</span>}
               </button>
             );
           })}
@@ -908,15 +1030,23 @@ function QuizScreen({ user, onNavigate }) {
         {selected !== null && (
           <div style={{ animation: "fadeIn .3s ease both" }}>
             {currentQ.note && (
-              <div className="rounded-2xl px-4 py-3 mb-3" style={{ background: selected === currentQ.answer ? "#14532d33" : "#7f1d1d22", border: `1px solid ${selected === currentQ.answer ? "#22c55e33" : "#ef444433"}` }}>
-                <p className="text-xs leading-relaxed" style={{ color: selected === currentQ.answer ? "#86efac" : "#fca5a5" }}>
+              <div style={{
+                background: selected === currentQ.answer ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.07)",
+                border: `1px solid ${selected === currentQ.answer ? "rgba(34,197,94,0.25)" : "rgba(239,68,68,0.2)"}`,
+                borderRadius:14, padding:"12px 14px", marginBottom:12
+              }}>
+                <p style={{ color: selected === currentQ.answer ? "#86EFAC" : "#FCA5A5", fontSize:12, lineHeight:1.6, margin:0 }}>
                   💡 {currentQ.note}
                 </p>
               </div>
             )}
             <button onClick={handleNext}
               className="w-full py-4 rounded-2xl font-bold text-white active:scale-95 transition-transform"
-              style={{ background: hearts <= 0 ? "linear-gradient(135deg,#d4002a,#ef4444)" : "linear-gradient(135deg,#1a4fd6,#2563eb)" }}>
+              style={{
+              background: hearts <= 0 ? "linear-gradient(135deg,#E8002A,#EF4444)" : "linear-gradient(135deg,#2563EB,#3B82F6)",
+              boxShadow: hearts <= 0 ? "0 4px 20px rgba(232,0,42,0.3)" : "0 4px 20px rgba(37,99,235,0.3)",
+              borderRadius:14, border:"none"
+            }}>
               {hearts <= 0 ? "💔 Wè Rezilta" : "Kesyon Suivant →"}
             </button>
           </div>
@@ -998,7 +1128,7 @@ function QuizScreen({ user, onNavigate }) {
     const note20  = scoreToNote20(score, totalAnswered);
     const mention = getMention(note20);
     return (
-      <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
+      <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
         <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
           {/* Header Game Over */}
           <div className="text-center" style={{ animation: "popIn .5s cubic-bezier(.34,1.56,.64,1) both" }}>
@@ -1089,9 +1219,9 @@ function LeaderboardScreen({ user, onNavigate }) {
   const medalEmojis = ["🥇","🥈","🥉"];
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header */}
-      <div className="px-4 py-4 border-b" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-3">
           <span style={{ fontSize: 24 }}>🏆</span>
           <div>
@@ -1151,31 +1281,41 @@ function LeaderboardScreen({ user, onNavigate }) {
             {board.length >= 3 && (
               <div className="flex items-end justify-center gap-3 py-4" style={{ animation: "fadeIn .5s ease both" }}>
                 {/* 2nd */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="text-2xl mb-1">🥈</div>
-                  <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
-                    style={{ background: "#94a3b822", border: "1px solid #94a3b844", height: 80 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[1].name || board[1].phone}</div>
-                    <div className="font-black mt-1" style={{ color: "#94a3b8" }}>{board[1].value}{currentTab.valueLabel}</div>
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flex:1 }}>
+                  <div style={{ fontSize:28, marginBottom:6 }}>🥈</div>
+                  <div style={{
+                    width:"100%", borderRadius:"14px 14px 0 0", display:"flex", flexDirection:"column", alignItems:"center",
+                    padding:"12px 8px", height:80, background:"linear-gradient(180deg,rgba(148,163,184,0.15),rgba(148,163,184,0.05))",
+                    border:"1px solid rgba(148,163,184,0.25)", borderBottom:"none"
+                  }}>
+                    <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:11, textAlign:"center", lineHeight:1.3 }}>{board[1].name || board[1].phone}</div>
+                    <div style={{ fontWeight:900, marginTop:6, color:"#94A3B8", fontSize:15 }}>{board[1].value}{currentTab.valueLabel}</div>
                   </div>
                 </div>
                 {/* 1st */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="text-3xl mb-1">🥇</div>
-                  <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
-                    style={{ background: "#fbbf2422", border: "1px solid #fbbf2444", height: 100 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[0].name || board[0].phone}</div>
-                    <div className="font-black text-lg mt-1" style={{ color: "#fbbf24" }}>{board[0].value}{currentTab.valueLabel}</div>
-                    {board[0].isMe && <div className="text-xs mt-1" style={{ color: "#fbbf24" }}>← Ou</div>}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flex:1 }}>
+                  <div style={{ fontSize:36, marginBottom:6, filter:"drop-shadow(0 0 12px #F59E0B)" }}>🥇</div>
+                  <div style={{
+                    width:"100%", borderRadius:"14px 14px 0 0", display:"flex", flexDirection:"column", alignItems:"center",
+                    padding:"14px 8px", height:100, background:"linear-gradient(180deg,rgba(251,191,36,0.2),rgba(251,191,36,0.05))",
+                    border:"1px solid rgba(251,191,36,0.35)", borderBottom:"none",
+                    boxShadow:"0 -4px 20px rgba(251,191,36,0.15)"
+                  }}>
+                    <div style={{ color:"#FDE68A", fontWeight:800, fontSize:11, textAlign:"center", lineHeight:1.3 }}>{board[0].name || board[0].phone}</div>
+                    <div style={{ fontWeight:900, marginTop:6, color:"#FBD04A", fontSize:20 }}>{board[0].value}{currentTab.valueLabel}</div>
+                    {board[0].isMe && <div style={{ color:"#F59E0B", fontSize:10, marginTop:4 }}>← Ou</div>}
                   </div>
                 </div>
                 {/* 3rd */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="text-2xl mb-1">🥉</div>
-                  <div className="w-full rounded-t-2xl flex flex-col items-center py-3 px-2"
-                    style={{ background: "#cd7c3222", border: "1px solid #cd7c3244", height: 65 }}>
-                    <div className="text-white font-bold text-xs text-center">{board[2].name || board[2].phone}</div>
-                    <div className="font-black mt-1" style={{ color: "#cd7c32" }}>{board[2].value}{currentTab.valueLabel}</div>
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flex:1 }}>
+                  <div style={{ fontSize:26, marginBottom:6 }}>🥉</div>
+                  <div style={{
+                    width:"100%", borderRadius:"14px 14px 0 0", display:"flex", flexDirection:"column", alignItems:"center",
+                    padding:"10px 6px", height:65, background:"linear-gradient(180deg,rgba(205,124,50,0.15),rgba(205,124,50,0.05))",
+                    border:"1px solid rgba(205,124,50,0.25)", borderBottom:"none"
+                  }}>
+                    <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:10, textAlign:"center", lineHeight:1.3 }}>{board[2].name || board[2].phone}</div>
+                    <div style={{ fontWeight:900, marginTop:5, color:"#CD7C32", fontSize:14 }}>{board[2].value}{currentTab.valueLabel}</div>
                   </div>
                 </div>
               </div>
@@ -1184,31 +1324,30 @@ function LeaderboardScreen({ user, onNavigate }) {
             {/* Liste complète */}
             <div className="space-y-2">
               {board.map((entry, i) => (
-                <div key={i}
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl"
-                  style={{
-                    background: entry.isMe ? "#1a4fd633" : "#0f1e4a",
-                    border: entry.isMe ? "1.5px solid #3b82f6" : "1px solid #1e3a8a33",
-                    animation: `fadeIn .3s ${i * 0.05}s ease both`,
+                <div key={i} style={{
+                    display:"flex", alignItems:"center", gap:12, padding:"12px 14px", borderRadius:14,
+                    background: entry.isMe ? "rgba(37,99,235,0.15)" : "rgba(12,21,48,0.8)",
+                    border: entry.isMe ? "1.5px solid rgba(37,99,235,0.5)" : "1px solid rgba(255,255,255,0.06)",
+                    animation: `slideIn .3s ${i * 0.04}s ease both`,
+                    boxShadow: entry.isMe ? "0 4px 20px rgba(37,99,235,0.15)" : "0 2px 8px rgba(0,0,0,0.15)"
                   }}>
-                  {/* Rang */}
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0"
-                    style={{ background: colors[i % colors.length] + "33", color: colors[i % colors.length] }}>
+                  <div style={{
+                    width:32, height:32, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center",
+                    fontWeight:900, fontSize:12, flexShrink:0,
+                    background:`${colors[i % colors.length]}20`, color:colors[i % colors.length]
+                  }}>
                     {i < 3 ? medalEmojis[i] : `#${entry.rank}`}
                   </div>
-                  {/* Téléphone masqué */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-white font-semibold text-sm font-mono">{entry.name || entry.phone}</span>
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                      <span style={{ color:"#E8EEFF", fontWeight:700, fontSize:13, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{entry.name || entry.phone}</span>
                       {entry.isMe && (
-                        <span className="px-2 py-0.5 rounded-full text-xs font-bold"
-                          style={{ background: "#1a4fd6", color: "white" }}>Ou</span>
+                        <span style={{ padding:"2px 7px", borderRadius:20, fontSize:10, fontWeight:700, background:"#2563EB", color:"white", flexShrink:0 }}>Ou</span>
                       )}
                     </div>
                   </div>
-                  {/* Valeur */}
-                  <div className="font-black text-lg" style={{ color: colors[i % colors.length] }}>
-                    {entry.value}<span className="text-xs font-normal" style={{ color: colors[i % colors.length] + "99" }}>{currentTab.valueLabel}</span>
+                  <div style={{ fontWeight:900, fontSize:17, color:colors[i % colors.length], flexShrink:0 }}>
+                    {entry.value}<span style={{ fontSize:10, fontWeight:400, opacity:0.6 }}>{currentTab.valueLabel}</span>
                   </div>
                 </div>
               ))}
@@ -1259,8 +1398,8 @@ function HistoryScreen({ user, onNavigate }) {
   });
 
   if (selected) return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
-      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
         <button onClick={() => setSelected(null)} className="text-blue-400 text-xl">←</button>
         <div className="flex-1">
           <h2 className="text-white font-bold">Detay Scan</h2>
@@ -1316,8 +1455,8 @@ function HistoryScreen({ user, onNavigate }) {
   );
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#070d1f" }}>
-      <div className="px-4 py-4 border-b" style={{ background: "#0a0f2e", borderColor: "#ffffff10" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
         <h2 className="text-white font-bold">📋 Istwa Scan Ou</h2>
         <div className="flex items-center gap-3 mt-0.5">
           <p className="text-blue-400 text-xs">{history.length} scan{history.length !== 1 ? "s" : ""} total</p>
@@ -1406,19 +1545,29 @@ function HistoryScreen({ user, onNavigate }) {
 // ─── MENU ─────────────────────────────────────────────────────────────────────
 function MenuScreen({ user, onNavigate, onLogout }) {
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
-      <div className="px-6 pt-10 pb-6 border-b" style={{ borderColor: "#ffffff10" }}>
-        <div className="flex items-center gap-3">
-          <div style={{ width: 56, height: 56, borderRadius: 14, overflow: "hidden", flexShrink: 0, background: "#fff", boxShadow: "0 0 0 2px #3b82f633" }}>
-            <img src={APP_LOGO} alt="Gid NS4" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
+      <div style={{ padding:"32px 20px 20px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+        {/* Profile Card */}
+        <div style={{
+          background:"rgba(12,21,48,0.8)", backdropFilter:"blur(20px)",
+          border:"1px solid rgba(255,255,255,0.08)", borderRadius:20,
+          padding:"16px", display:"flex", alignItems:"center", gap:14,
+          boxShadow:"0 8px 32px rgba(0,0,0,0.3)"
+        }}>
+          <div style={{ width:52, height:52, borderRadius:14, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 4px 16px rgba(0,0,0,0.3)" }}>
+            <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
           </div>
-          <div>
-            <div className="text-white font-bold">{user.name || user.phone}</div>
-          <div className="text-blue-400 text-xs">{user.phone}</div>
-            <div className="text-blue-300 text-xs">{user.school}</div>
-            <div className="text-orange-300 text-xs mt-0.5">🔑 {user.code}</div>
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ color:"#E8EEFF", fontWeight:800, fontSize:15, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{user.name || user.phone}</div>
+            <div style={{ color:"#4B6ABA", fontSize:11, marginTop:2 }}>{user.phone}</div>
+            <div style={{ display:"flex", alignItems:"center", gap:6, marginTop:4 }}>
+              <span style={{ background:"rgba(37,99,235,0.15)", border:"1px solid rgba(37,99,235,0.25)", borderRadius:20, padding:"2px 8px", color:"#6B8ADB", fontSize:10, fontWeight:600 }}>
+                🔑 {user.code}
+              </span>
+            </div>
           </div>
         </div>
+        <div style={{ color:"#3B5BA8", fontSize:11, textAlign:"center", marginTop:10 }}>{user.school}</div>
         <div className="mt-4 rounded-xl px-4 py-3 flex justify-between items-center"
           style={{ background: user.daysRemaining <= 7 ? "#d4002a22" : "#14532d22", border: `1px solid ${user.daysRemaining <= 7 ? "#d4002a44" : "#22c55e33"}` }}>
           <div>
@@ -1489,7 +1638,7 @@ function PaymentScreen({ onBack }) {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
       <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "#ffffff10" }}>
         <button onClick={onBack} className="text-blue-400 text-xl">←</button>
         <h2 className="text-white font-bold text-lg">Peman & Aktivasyon</h2>
@@ -1718,7 +1867,7 @@ function DashboardScreen({ onBack, userCode }) {
   };
 
   if (!authorized) return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
       <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "#ffffff10" }}>
         <button onClick={onBack} className="text-blue-400 text-xl">←</button>
         <h2 className="text-white font-bold">Dashboard Direction</h2>
@@ -1747,7 +1896,7 @@ function DashboardScreen({ onBack, userCode }) {
   const colors = ["#22c55e","#3b82f6","#f59e0b","#a855f7","#ec4899","#14b8a6","#f97316"];
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
       <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "#ffffff10" }}>
         <button onClick={onBack} className="text-blue-400 text-xl">←</button>
         <div className="flex-1">
@@ -1771,8 +1920,8 @@ function DashboardScreen({ onBack, userCode }) {
         <div className="grid grid-cols-2 gap-3">
           {[
             { label: "Scan Total", val: s.totalScans,    icon: "🔍", color: "#3b82f6" },
-            { label: "Elèv Aktif", val: s.totalStudents, icon: "👥", color: "#22c55e" },
-            { label: "Scan Jodi",  val: s.scansToday,    icon: "📅", color: "#f59e0b" },
+            { label: "Elèves Actifs", val: s.totalStudents, icon: "👥", color: "#22c55e" },
+            { label: "Scan d'aujourd'hui",  val: s.scansToday,    icon: "📅", color: "#f59e0b" },
             { label: "Matières",   val: school.subjects.length, icon: "📚", color: "#a855f7" },
           ].map((item, i) => (
             <div key={i} className="rounded-2xl p-4" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
@@ -1824,7 +1973,7 @@ function DashboardScreen({ onBack, userCode }) {
 // ─── PARTNER ──────────────────────────────────────────────────────────────────
 function PartnerScreen({ onBack }) {
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(160deg,#0a0f2e,#0d1b4b)" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
       <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "#ffffff10" }}>
         <button onClick={onBack} className="text-blue-400 text-xl">←</button>
         <h2 className="text-white font-bold">Vin Patnè</h2>
@@ -1836,12 +1985,12 @@ function PartnerScreen({ onBack }) {
           <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare egzamen NS4 yo.</p>
         </div>
         {[
-          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
+          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire kòd la" },
           { icon:"🎛️", title:"Quota Modifyab", desc:"Chwazi 3, 5 oswa 10 scan pa jou" },
           { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
-          { icon:"📚", title:"Matières Seleksyone", desc:"Aktive matières" },
-          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv wè pwogresyon yo pa rapò a lòt yo" },
-          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje" },
+          { icon:"📚", title:"Matyè Seleksyone", desc:"Aktive matyè yo" },
+          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv yo wè pwogresyon yo pa rapò a lòt yo" },
+          { icon:"🔒", title:"Sekirite Maksimòm", desc:"Kle API pwoteje" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
             <span style={{ fontSize: 26 }}>{f.icon}</span>
