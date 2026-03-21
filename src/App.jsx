@@ -70,6 +70,7 @@ function ErrorToast({ error, onRetry, onDismiss }) {
 import { QUIZ_DATA } from "./quizData.js";
 // ─── LOGO ────────────────────────────────────────────────────────────────────
 const APP_LOGO = "data:image/webp;base64,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";
+const PROF_LAKAY_LOGO = "data:image/webp;base64,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";
 
 
 // ─── SHUFFLE ──────────────────────────────────────────────────────────────────
@@ -464,7 +465,7 @@ function LoginScreen({ onLogin, onNavigate }) {
           <button onClick={handleLogin} disabled={loading}
             style={{
               width:"100%", padding:"15px", borderRadius:14,
-              background: loading ? "#2E4080" : "linear-gradient(135deg,#E8002A,#FF5C35)",
+              background: loading ? "#1E2A4A" : "linear-gradient(135deg,#E8002A,#FF5C35)",
               color:"white", fontWeight:800, fontSize:15, border:"none",
               boxShadow: loading ? "none" : "0 6px 24px #E8002A33",
               transition:"all .2s", cursor: loading ? "not-allowed" : "pointer",
@@ -474,7 +475,7 @@ function LoginScreen({ onLogin, onNavigate }) {
           </button>
 
           <div style={{ textAlign:"center", marginTop:16 }}>
-            <span style={{ color:"#4b5ea8", fontSize:12 }}>Pa gen kòd ? </span>
+            <span style={{ color:"#2A3A6A", fontSize:12 }}>Pa gen kòd ? </span>
             <span style={{ color:"#4B6ABA", fontSize:12 }}>Pale ak direksyon lekòl ou a.</span>
           </div>
         </div>
@@ -482,7 +483,7 @@ function LoginScreen({ onLogin, onNavigate }) {
 
       <div style={{ paddingBottom:24, display:"flex", justifyContent:"center", gap:24 }}>
         <button onClick={() => onNavigate("payment")} style={{ color:"#3B5BA8", fontSize:12, background:"none", border:"none" }}>Peman</button>
-        <span style={{ color:"#2E4080", fontSize:12 }}>·</span>
+        <span style={{ color:"#1E2A4A", fontSize:12 }}>·</span>
         <button onClick={() => onNavigate("partner")} style={{ color:"#3B5BA8", fontSize:12, background:"none", border:"none" }}>Vin Patnè</button>
       </div>
     </div>
@@ -501,7 +502,7 @@ function BottomNav({ active, onNavigate }) {
   return (
     <div style={{
       display:"flex",
-      background:"rgba(10,15,46,0.97)",
+      background:"rgba(10,15,46,0.95)",
       backdropFilter:"blur(20px)",
       borderTop:"1px solid rgba(255,255,255,0.10)",
       paddingBottom:"env(safe-area-inset-bottom, 0px)",
@@ -614,9 +615,9 @@ function ChatScreen({ user, onNavigate }) {
   const remaining = user.dailyScans - scans;
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       <ExpiryBanner daysRemaining={user.daysRemaining} />
-      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 16px", background:"rgba(10,15,46,0.98)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 16px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
         <div style={{ width:40, height:40, borderRadius:10, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 12px #00000044" }}>
           <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
@@ -638,7 +639,7 @@ function ChatScreen({ user, onNavigate }) {
           <span style={{ fontSize:10, color:"#4B5EA8", marginLeft:3 }}>scans</span>
         </div>
       </div>
-      <div style={{ padding:"8px 14px", display:"flex", gap:8, overflowX:"auto", background:"rgba(10,15,46,0.92)", borderBottom:"1px solid rgba(255,255,255,0.05)", scrollbarWidth:"none" }}>
+      <div style={{ padding:"8px 14px", display:"flex", gap:8, overflowX:"auto", background:"rgba(10,15,46,0.90)", borderBottom:"1px solid rgba(255,255,255,0.05)", scrollbarWidth:"none" }}>
         {user.subjects.map((s, i) => (
           <button key={i} onClick={() => setActiveSubject(s)}
             style={{
@@ -658,8 +659,8 @@ function ChatScreen({ user, onNavigate }) {
         {messages.map((msg, i) => (
           <div key={i} className="flex gap-2" style={{ justifyContent: msg.role === "user" ? "flex-end" : "flex-start", animation: "fadeIn .3s ease both" }}>
             {msg.role === "assistant" && (
-              <div className="w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center mt-1" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-                <span style={{ fontSize: 16 }}>🧑‍🏫</span>
+              <div style={{ width:32, height:32, borderRadius:10, overflow:"hidden", flexShrink:0, boxShadow:"0 2px 8px #00000044" }}>
+                <img src={PROF_LAKAY_LOGO} alt="Prof Lakay" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
               </div>
             )}
             <div style={{ maxWidth:"82%" }}>
@@ -681,8 +682,8 @@ function ChatScreen({ user, onNavigate }) {
         ))}
         {loading && (
           <div className="flex gap-2 items-start">
-            <div className="w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-              <span style={{ fontSize: 16 }}>🧑‍🏫</span>
+            <div style={{ width:32, height:32, borderRadius:10, overflow:"hidden", flexShrink:0, boxShadow:"0 2px 8px #00000044" }}>
+              <img src={PROF_LAKAY_LOGO} alt="Prof Lakay" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
             </div>
             <div className="px-4 py-3 rounded-2xl" style={{ background: "#0f1e4a" }}>
               <div className="flex gap-1.5 items-center">
@@ -700,7 +701,7 @@ function ChatScreen({ user, onNavigate }) {
         <div ref={bottomRef} />
       </div>
       <ErrorToast error={apiError} onRetry={lastPayload ? () => sendMessage(lastPayload) : null} onDismiss={() => { setApiError(null); setLastPayload(null); }} />
-      <div style={{ padding:"10px 12px", background:"rgba(10,15,46,0.98)", backdropFilter:"blur(20px)", borderTop:"1px solid rgba(255,255,255,0.10)" }}>
+      <div style={{ padding:"10px 12px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderTop:"1px solid rgba(255,255,255,0.10)" }}>
         {image && (
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8, padding:"6px 8px", background:"rgba(37,99,235,0.1)", borderRadius:10, border:"1px solid rgba(37,99,235,0.2)" }}>
             <img src={image} alt="" style={{ width:36, height:36, borderRadius:8, objectFit:"cover" }} />
@@ -882,8 +883,8 @@ function QuizScreen({ user, onNavigate }) {
 
   // ── SELECT ──
   if (phase === "select") return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
-      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", background:"rgba(10,15,46,0.98)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
         <div style={{ width:38, height:38, borderRadius:9, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 10px #00000044" }}>
           <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
@@ -949,9 +950,9 @@ function QuizScreen({ user, onNavigate }) {
 
   // ── QCM (Mode Duolingo) ──
   if (phase === "qcm" && currentQ) return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header avec cœurs + streak */}
-      <div className="px-4 py-3 border-b" style={{ background: "rgba(10,15,46,0.98)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-3 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-2">
           <button onClick={() => setPhase("select")} className="text-blue-400 text-xl">←</button>
           <h2 className="text-white font-bold flex-1 text-sm">{subject}</h2>
@@ -1047,7 +1048,7 @@ function QuizScreen({ user, onNavigate }) {
               boxShadow: hearts <= 0 ? "0 4px 20px rgba(232,0,42,0.3)" : "0 4px 20px rgba(37,99,235,0.3)",
               borderRadius:14, border:"none"
             }}>
-              {hearts <= 0 ? "💔 Gade Rezilta" : "Kesyon Suivant →"}
+              {hearts <= 0 ? "💔 Wè Rezilta" : "Kesyon Suivant →"}
             </button>
           </div>
         )}
@@ -1089,7 +1090,7 @@ function QuizScreen({ user, onNavigate }) {
             {[
               { icon: "✅", val: score,     label: "Total kòrèk" },
               { icon: "🔥", val: maxStreak, label: "Max streak" },
-              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Kesyon wè" },
+              { icon: "📚", val: `${seenCount}/${allCount}`, label: "Kesyon vues" },
             ].map((s, i) => (
               <div key={i} className="rounded-2xl p-3 text-center" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
                 <div style={{ fontSize: 18 }}>{s.icon}</div>
@@ -1100,7 +1101,7 @@ function QuizScreen({ user, onNavigate }) {
           </div>
 
           {/* Question */}
-          <p className="text-white font-bold text-center text-lg">Ou vle kontinye ?</p>
+          <p className="text-white font-bold text-center text-lg">Veux-tu kontinye ?</p>
 
           {/* Boutons */}
           <div className="flex gap-3">
@@ -1128,7 +1129,7 @@ function QuizScreen({ user, onNavigate }) {
     const note20  = scoreToNote20(score, totalAnswered);
     const mention = getMention(note20);
     return (
-      <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
+      <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
         <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
           {/* Header Game Over */}
           <div className="text-center" style={{ animation: "popIn .5s cubic-bezier(.34,1.56,.64,1) both" }}>
@@ -1208,7 +1209,7 @@ function LeaderboardScreen({ user, onNavigate }) {
   }, []);
 
   const tabs = [
-    { id: "bestNote",     icon: "🏆", label: "Pi bon nòt",  valueLabel: "/20" },
+    { id: "bestNote",     icon: "🏆", label: "Meilleure Note",  valueLabel: "/20" },
     { id: "totalCorrect", icon: "🔥", label: "Total Kòrèk",     valueLabel: " pts" },
     { id: "thisWeek",     icon: "📅", label: "Semèn Sa",        valueLabel: " pts" },
   ];
@@ -1219,9 +1220,9 @@ function LeaderboardScreen({ user, onNavigate }) {
   const medalEmojis = ["🥇","🥈","🥉"];
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header */}
-      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.98)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-3">
           <span style={{ fontSize: 24 }}>🏆</span>
           <div>
@@ -1398,8 +1399,8 @@ function HistoryScreen({ user, onNavigate }) {
   });
 
   if (selected) return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
-      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "rgba(10,15,46,0.98)", borderColor: "#ffffff10" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <button onClick={() => setSelected(null)} className="text-blue-400 text-xl">←</button>
         <div className="flex-1">
           <h2 className="text-white font-bold">Detay Scan</h2>
@@ -1436,8 +1437,8 @@ function HistoryScreen({ user, onNavigate }) {
         )}
         <div className="rounded-2xl p-4" style={{ background: "#0f1e4a", border: "1px solid #1e3a8a33" }}>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#d4002a,#ff6b35)" }}>
-              <span style={{ fontSize: 14 }}>🧑‍🏫</span>
+            <div style={{ width:28, height:28, borderRadius:8, overflow:"hidden", flexShrink:0 }}>
+              <img src={PROF_LAKAY_LOGO} alt="Prof Lakay" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
             </div>
             <span className="text-white font-bold text-sm">Repons Prof Lakay</span>
           </div>
@@ -1455,8 +1456,8 @@ function HistoryScreen({ user, onNavigate }) {
   );
 
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: "#0a0f2e" }}>
-      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.98)", borderColor: "#ffffff10" }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <h2 className="text-white font-bold">📋 Istwa Scan Ou</h2>
         <div className="flex items-center gap-3 mt-0.5">
           <p className="text-blue-400 text-xs">{history.length} scan{history.length !== 1 ? "s" : ""} total</p>
@@ -1600,8 +1601,8 @@ function MenuScreen({ user, onNavigate, onLogout }) {
         <div className="flex items-center gap-3 px-5 py-4 rounded-2xl" style={{ background: "#14532d15", border: "1px solid #22c55e22" }}>
           <span>🔒</span>
           <div>
-            <div className="text-green-300 text-sm font-semibold">Koneksyon Sekirize</div>
-            <div className="text-green-800 text-xs">Clé API protégée ak Supabase</div>
+            <div className="text-green-300 text-sm font-semibold">Koneksyon Sécurisé</div>
+            <div className="text-green-800 text-xs">Clé API protégée via Supabase</div>
           </div>
         </div>
       </div>
@@ -1641,7 +1642,7 @@ function PaymentScreen({ onBack }) {
     <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
       <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "#ffffff10" }}>
         <button onClick={onBack} className="text-blue-400 text-xl">←</button>
-        <h2 className="text-white font-bold text-lg">Pèman & Aktivasyon</h2>
+        <h2 className="text-white font-bold text-lg">Peman & Aktivasyon</h2>
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {loading ? (
@@ -1664,7 +1665,7 @@ function PaymentScreen({ onBack }) {
                 <button onClick={() => copy(p.number, p.method)}
                   className="w-full py-3.5 rounded-2xl font-bold text-sm text-white flex items-center justify-center gap-2"
                   style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
-                  {copied === p.method ? "✅ Kopye !" : "📋 Kopye Nimewo a"}
+                  {copied === p.method ? "✅ Copié !" : "📋 Kopye Nimewo a"}
                 </button>
                 <p className="text-white/60 text-xs text-center mt-3">⚡ Aktivasyon garanti an mwens 30 minit</p>
               </div>
@@ -1674,7 +1675,7 @@ function PaymentScreen({ onBack }) {
         <button onClick={() => window.open("https://wa.me/50900000000?text=Bonjou%2C%20mwen%20vle%20aktive%20Gid%20NS4.", "_blank")}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman sou WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman via WhatsApp
         </button>
       </div>
     </div>
@@ -1920,8 +1921,8 @@ function DashboardScreen({ onBack, userCode }) {
         <div className="grid grid-cols-2 gap-3">
           {[
             { label: "Scan Total", val: s.totalScans,    icon: "🔍", color: "#3b82f6" },
-            { label: "Élèves Actifs", val: s.totalStudents, icon: "👥", color: "#22c55e" },
-            { label: "Scan d'aujourd'hui",  val: s.scansToday,    icon: "📅", color: "#f59e0b" },
+            { label: "Elèv Aktif", val: s.totalStudents, icon: "👥", color: "#22c55e" },
+            { label: "Scan Jodi",  val: s.scansToday,    icon: "📅", color: "#f59e0b" },
             { label: "Matières",   val: school.subjects.length, icon: "📚", color: "#a855f7" },
           ].map((item, i) => (
             <div key={i} className="rounded-2xl p-4" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
@@ -1982,15 +1983,15 @@ function PartnerScreen({ onBack }) {
         <div className="rounded-3xl px-6 py-6" style={{ background: "linear-gradient(135deg,#1a1a5e,#2a2a8e)", border: "1px solid #3b82f633" }}>
           <div className="text-5xl mb-4">🏫</div>
           <h3 className="text-white font-black text-xl mb-2">Ofri Aksè Ilimite a Elèv Ou Yo</h3>
-          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24,7/7 pou prepare egzamen NS4 yo.</p>
+          <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare Bak NS4 yo.</p>
         </div>
         {[
-          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè yo" },
+          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè — 30, 90, 180 jou" },
           { icon:"🎛️", title:"Quota Modifyab", desc:"Chwazi 3, 5 oswa 10 scan pa jou" },
           { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
-          { icon:"📚", title:"Matyè Seleksyone", desc:"Aktivasyon matyè yo" },
-          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv yo wè pwogresyon yo pa rapò ak lòt yo" },
-          { icon:"🔒", title:"Sékirité Maksimòm", desc:"Kle API pwoteje" },
+          { icon:"📚", title:"Matières Seleksyone", desc:"Aktive sèlman matières ou peye a" },
+          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv wè pwogresyon yo pa rapò a lòt yo" },
+          { icon:"🔒", title:"Sékirité Maximum", desc:"Clé API pwoteje, jamè nan APK" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
             <span style={{ fontSize: 26 }}>{f.icon}</span>
@@ -2003,7 +2004,7 @@ function PartnerScreen({ onBack }) {
         <button onClick={() => window.open("https://wa.me/50900000000?text=Bonjou%2C%20mwen%20vle%20vin%20patnè%20Gid%20NS4.", "_blank")}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span style={{ fontSize: 22 }}>💬</span> Kontakte nou sou WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Kontakte Nou sou WhatsApp
         </button>
       </div>
     </div>
