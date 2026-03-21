@@ -424,9 +424,9 @@ function LoginScreen({ onLogin, onNavigate }) {
         {/* Glass Card */}
         <div className="w-full" style={{
           maxWidth:380,
-          background:"rgba(12,21,48,0.8)",
+          background:"rgba(15,28,60,0.80)",
           backdropFilter:"blur(20px)",
-          border:"1px solid rgba(255,255,255,0.08)",
+          border:"1px solid rgba(255,255,255,0.12)",
           borderRadius:24,
           padding:"28px 24px",
           boxShadow:"0 24px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)"
@@ -501,9 +501,9 @@ function BottomNav({ active, onNavigate }) {
   return (
     <div style={{
       display:"flex",
-      background:"rgba(4,8,26,0.92)",
+      background:"rgba(10,15,46,0.95)",
       backdropFilter:"blur(20px)",
-      borderTop:"1px solid rgba(255,255,255,0.06)",
+      borderTop:"1px solid rgba(255,255,255,0.10)",
       paddingBottom:"env(safe-area-inset-bottom, 0px)",
     }}>
       {tabs.map(tab => {
@@ -523,7 +523,7 @@ function BottomNav({ active, onNavigate }) {
             <span style={{ fontSize:18, filter: isActive ? "none" : "grayscale(0.3) opacity(0.5)" }}>{tab.icon}</span>
             <span style={{
               fontSize:9, fontWeight: isActive ? 700 : 500,
-              color: isActive ? "#FF5C35" : "#2E4080",
+              color: isActive ? "#FF5C35" : "#4B5EA8",
               marginTop:2, letterSpacing:"0.03em"
             }}>{tab.label}</span>
           </button>
@@ -616,7 +616,7 @@ function ChatScreen({ user, onNavigate }) {
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       <ExpiryBanner daysRemaining={user.daysRemaining} />
-      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 16px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 16px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
         <div style={{ width:40, height:40, borderRadius:10, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 12px #00000044" }}>
           <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
@@ -635,10 +635,10 @@ function ChatScreen({ user, onNavigate }) {
           <span style={{ fontSize:12, fontWeight:700, color: remaining <= 0 ? "#FF6B6B" : remaining === 1 ? "#FBD04A" : "#4ADE80" }}>
             {remaining}/{user.dailyScans}
           </span>
-          <span style={{ fontSize:10, color:"#2E4080", marginLeft:3 }}>scans</span>
+          <span style={{ fontSize:10, color:"#4B5EA8", marginLeft:3 }}>scans</span>
         </div>
       </div>
-      <div style={{ padding:"8px 14px", display:"flex", gap:8, overflowX:"auto", background:"rgba(4,8,26,0.85)", borderBottom:"1px solid rgba(255,255,255,0.05)", scrollbarWidth:"none" }}>
+      <div style={{ padding:"8px 14px", display:"flex", gap:8, overflowX:"auto", background:"rgba(10,15,46,0.90)", borderBottom:"1px solid rgba(255,255,255,0.05)", scrollbarWidth:"none" }}>
         {user.subjects.map((s, i) => (
           <button key={i} onClick={() => setActiveSubject(s)}
             style={{
@@ -668,7 +668,7 @@ function ChatScreen({ user, onNavigate }) {
                 padding:"11px 15px", fontSize:14, lineHeight:1.65,
                 background: msg.role === "user"
                   ? "linear-gradient(135deg,#2563EB,#1D4ED8)"
-                  : "rgba(12,21,48,0.95)",
+                  : "rgba(15,28,60,0.95)",
                 border: msg.role === "assistant" ? "1px solid rgba(37,99,235,0.15)" : "none",
                 color:"#E8EEFF",
                 borderRadius: msg.role === "user" ? "18px 18px 5px 18px" : "5px 18px 18px 18px",
@@ -700,7 +700,7 @@ function ChatScreen({ user, onNavigate }) {
         <div ref={bottomRef} />
       </div>
       <ErrorToast error={apiError} onRetry={lastPayload ? () => sendMessage(lastPayload) : null} onDismiss={() => { setApiError(null); setLastPayload(null); }} />
-      <div style={{ padding:"10px 12px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ padding:"10px 12px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderTop:"1px solid rgba(255,255,255,0.10)" }}>
         {image && (
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8, padding:"6px 8px", background:"rgba(37,99,235,0.1)", borderRadius:10, border:"1px solid rgba(37,99,235,0.2)" }}>
             <img src={image} alt="" style={{ width:36, height:36, borderRadius:8, objectFit:"cover" }} />
@@ -727,9 +727,9 @@ function ChatScreen({ user, onNavigate }) {
             placeholder={remaining <= 0 ? "Limit jou a rive..." : "Poze yon kesyon oswa analize yon egzèsis..."}
             rows={1} disabled={remaining <= 0}
             className="flex-1 rounded-xl px-4 py-3 text-sm outline-none resize-none"
-            style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", maxHeight:80, color:"#E8EEFF", borderRadius:12, transition:"border-color .2s" }}
+            style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.12)", maxHeight:80, color:"#E8EEFF", borderRadius:12, transition:"border-color .2s" }}
             onFocus={e => e.target.style.borderColor="rgba(37,99,235,0.4)"}
-            onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.08)"} />
+            onBlur={e => e.target.style.borderColor="rgba(255,255,255,0.12)"} />
           <button onClick={() => sendMessage()} disabled={loading || remaining <= 0}
             style={{
               width:40, height:40, borderRadius:12, flexShrink:0,
@@ -883,7 +883,7 @@ function QuizScreen({ user, onNavigate }) {
   // ── SELECT ──
   if (phase === "select") return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
-      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", background:"rgba(4,8,26,0.95)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", background:"rgba(10,15,46,0.97)", backdropFilter:"blur(20px)", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
         <div style={{ width:38, height:38, borderRadius:9, overflow:"hidden", flexShrink:0, background:"#fff", boxShadow:"0 2px 10px #00000044" }}>
           <img src={APP_LOGO} alt="Gid NS4" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
         </div>
@@ -901,13 +901,13 @@ function QuizScreen({ user, onNavigate }) {
             <div style={{ color:"#5B7ADB", fontSize:11, marginTop:2 }}>Kesyon enfini • Jwe jouk ou pèdi 3 kè</div>
           </div>
         </div>
-        <p style={{ color:"#2E4080", fontSize:11, textAlign:"center", padding:"4px 0", letterSpacing:"0.08em", textTransform:"uppercase" }}>— Chwazi yon matière —</p>
+        <p style={{ color:"#4B5EA8", fontSize:11, textAlign:"center", padding:"4px 0", letterSpacing:"0.08em", textTransform:"uppercase" }}>— Chwazi yon matière —</p>
         {availableSubjects.map(sub => (
           <button key={sub} onClick={() => startQCM(sub)}
             style={{
               width:"100%", padding:"14px 16px", borderRadius:16, textAlign:"left",
               display:"flex", alignItems:"center", gap:14, border:"none",
-              background:"rgba(12,21,48,0.9)", border:"1px solid rgba(37,99,235,0.12)",
+              background:"rgba(15,28,60,0.90)", border:"1px solid rgba(37,99,235,0.12)",
               boxShadow:"0 2px 12px rgba(0,0,0,0.2)", cursor:"pointer",
               transition:"all .2s", animation:"slideIn .3s ease both",
             }}
@@ -918,9 +918,9 @@ function QuizScreen({ user, onNavigate }) {
             </div>
             <div style={{ flex:1 }}>
               <div style={{ color:"#E8EEFF", fontWeight:700, fontSize:13 }}>{sub}</div>
-              <div style={{ color:"#2E4080", fontSize:11, marginTop:3 }}>{QUIZ_DATA[sub].length} kesyon • Mode infini 🔄</div>
+              <div style={{ color:"#4B5EA8", fontSize:11, marginTop:3 }}>{QUIZ_DATA[sub].length} kesyon • Mode infini 🔄</div>
             </div>
-            <span style={{ color:"#2E4080", fontSize:18 }}>›</span>
+            <span style={{ color:"#4B5EA8", fontSize:18 }}>›</span>
           </button>
         ))}
         {Object.keys(QUIZ_DATA).filter(s => !user.subjects.includes(s)).map(sub => (
@@ -935,7 +935,7 @@ function QuizScreen({ user, onNavigate }) {
             </div>
             <div style={{ flex:1 }}>
               <div style={{ color:"#E8EEFF", fontWeight:600, fontSize:13 }}>{sub}</div>
-              <div style={{ color:"#2E4080", fontSize:11, marginTop:2 }}>Pa disponib ak kòd lekòl ou</div>
+              <div style={{ color:"#4B5EA8", fontSize:11, marginTop:2 }}>Pa disponib ak kòd lekòl ou</div>
             </div>
             <span style={{ fontSize:14 }}>🔒</span>
           </div>
@@ -951,7 +951,7 @@ function QuizScreen({ user, onNavigate }) {
   if (phase === "qcm" && currentQ) return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header avec cœurs + streak */}
-      <div className="px-4 py-3 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-3 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-2">
           <button onClick={() => setPhase("select")} className="text-blue-400 text-xl">←</button>
           <h2 className="text-white font-bold flex-1 text-sm">{subject}</h2>
@@ -982,7 +982,7 @@ function QuizScreen({ user, onNavigate }) {
       </div>
 
       <div className="flex-1 px-4 py-5 flex flex-col gap-4 overflow-y-auto">
-        <div style={{ background:"rgba(12,21,48,0.95)", border:"1px solid rgba(37,99,235,0.15)", borderRadius:18, padding:"18px 18px", boxShadow:"0 4px 24px rgba(0,0,0,0.3)" }}>
+        <div style={{ background:"rgba(15,28,60,0.95)", border:"1px solid rgba(37,99,235,0.15)", borderRadius:18, padding:"18px 18px", boxShadow:"0 4px 24px rgba(0,0,0,0.3)" }}>
           <p style={{ color:"#E8EEFF", fontWeight:600, fontSize:15, lineHeight:1.6, margin:0 }}>{currentQ.q}</p>
         </div>
         <div className="space-y-3">
@@ -997,7 +997,7 @@ function QuizScreen({ user, onNavigate }) {
                 style={{
                   width:"100%", padding:"14px 16px", borderRadius:14, textAlign:"left",
                   display:"flex", alignItems:"center", gap:12,
-                  background: isCorrect ? "rgba(34,197,94,0.12)" : isWrong ? "rgba(239,68,68,0.1)" : "rgba(12,21,48,0.9)",
+                  background: isCorrect ? "rgba(34,197,94,0.12)" : isWrong ? "rgba(239,68,68,0.1)" : "rgba(15,28,60,0.90)",
                   border: `1.5px solid ${isCorrect ? "rgba(34,197,94,0.5)" : isWrong ? "rgba(239,68,68,0.4)" : "rgba(37,99,235,0.12)"}`,
                   color: isCorrect ? "#4ADE80" : isWrong ? "#FC8181" : "#E8EEFF",
                   cursor: selected !== null ? "default" : "pointer",
@@ -1208,7 +1208,7 @@ function LeaderboardScreen({ user, onNavigate }) {
   }, []);
 
   const tabs = [
-    { id: "bestNote",     icon: "🏆", label: "Meilleure Note",  valueLabel: "/20" },
+    { id: "bestNote",     icon: "🏆", label: "Pi bon Nòt",  valueLabel: "/20" },
     { id: "totalCorrect", icon: "🔥", label: "Total Kòrèk",     valueLabel: " pts" },
     { id: "thisWeek",     icon: "📅", label: "Semèn Sa",        valueLabel: " pts" },
   ];
@@ -1221,7 +1221,7 @@ function LeaderboardScreen({ user, onNavigate }) {
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
       {/* Header */}
-      <div className="px-4 py-4 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <div className="flex items-center gap-3 mb-3">
           <span style={{ fontSize: 24 }}>🏆</span>
           <div>
@@ -1326,8 +1326,8 @@ function LeaderboardScreen({ user, onNavigate }) {
               {board.map((entry, i) => (
                 <div key={i} style={{
                     display:"flex", alignItems:"center", gap:12, padding:"12px 14px", borderRadius:14,
-                    background: entry.isMe ? "rgba(37,99,235,0.15)" : "rgba(12,21,48,0.8)",
-                    border: entry.isMe ? "1.5px solid rgba(37,99,235,0.5)" : "1px solid rgba(255,255,255,0.06)",
+                    background: entry.isMe ? "rgba(37,99,235,0.15)" : "rgba(15,28,60,0.80)",
+                    border: entry.isMe ? "1.5px solid rgba(37,99,235,0.5)" : "1px solid rgba(255,255,255,0.10)",
                     animation: `slideIn .3s ${i * 0.04}s ease both`,
                     boxShadow: entry.isMe ? "0 4px 20px rgba(37,99,235,0.15)" : "0 2px 8px rgba(0,0,0,0.15)"
                   }}>
@@ -1399,7 +1399,7 @@ function HistoryScreen({ user, onNavigate }) {
 
   if (selected) return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
-      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-4 border-b flex items-center gap-3" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <button onClick={() => setSelected(null)} className="text-blue-400 text-xl">←</button>
         <div className="flex-1">
           <h2 className="text-white font-bold">Detay Scan</h2>
@@ -1456,7 +1456,7 @@ function HistoryScreen({ user, onNavigate }) {
 
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "var(--bg-deep,#04081A)" }}>
-      <div className="px-4 py-4 border-b" style={{ background: "rgba(4,8,26,0.95)", borderColor: "#ffffff10" }}>
+      <div className="px-4 py-4 border-b" style={{ background: "rgba(10,15,46,0.97)", borderColor: "#ffffff10" }}>
         <h2 className="text-white font-bold">📋 Istwa Scan Ou</h2>
         <div className="flex items-center gap-3 mt-0.5">
           <p className="text-blue-400 text-xs">{history.length} scan{history.length !== 1 ? "s" : ""} total</p>
@@ -1546,11 +1546,11 @@ function HistoryScreen({ user, onNavigate }) {
 function MenuScreen({ user, onNavigate, onLogout }) {
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "linear-gradient(145deg,#04081A,#080E24)" }}>
-      <div style={{ padding:"32px 20px 20px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ padding:"32px 20px 20px", borderBottom:"1px solid rgba(255,255,255,0.10)" }}>
         {/* Profile Card */}
         <div style={{
-          background:"rgba(12,21,48,0.8)", backdropFilter:"blur(20px)",
-          border:"1px solid rgba(255,255,255,0.08)", borderRadius:20,
+          background:"rgba(15,28,60,0.80)", backdropFilter:"blur(20px)",
+          border:"1px solid rgba(255,255,255,0.12)", borderRadius:20,
           padding:"16px", display:"flex", alignItems:"center", gap:14,
           boxShadow:"0 8px 32px rgba(0,0,0,0.3)"
         }}>
@@ -1585,8 +1585,8 @@ function MenuScreen({ user, onNavigate, onLogout }) {
       </div>
       <div className="flex-1 px-4 py-4 space-y-2">
         {[
-          { icon: "📊", label: "Dashboard Direction", screen: "dashboard" },
-          { icon: "💳", label: "Peman", screen: "payment" },
+          { icon: "📊", label: "Dashboard Direksyon", screen: "dashboard" },
+          { icon: "💳", label: "Pèman", screen: "payment" },
           { icon: "🤝", label: "Vin Patnè", screen: "partner" },
         ].map(item => (
           <button key={item.screen} onClick={() => onNavigate(item.screen)}
@@ -1600,8 +1600,8 @@ function MenuScreen({ user, onNavigate, onLogout }) {
         <div className="flex items-center gap-3 px-5 py-4 rounded-2xl" style={{ background: "#14532d15", border: "1px solid #22c55e22" }}>
           <span>🔒</span>
           <div>
-            <div className="text-green-300 text-sm font-semibold">Koneksyon Sécurisé</div>
-            <div className="text-green-800 text-xs">Clé API protégée via Supabase</div>
+            <div className="text-green-300 text-sm font-semibold">Koneksyon Sekirize</div>
+            <div className="text-green-800 text-xs">Kle API pwoteje ak Supabase</div>
           </div>
         </div>
       </div>
@@ -1664,7 +1664,7 @@ function PaymentScreen({ onBack }) {
                 <button onClick={() => copy(p.number, p.method)}
                   className="w-full py-3.5 rounded-2xl font-bold text-sm text-white flex items-center justify-center gap-2"
                   style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
-                  {copied === p.method ? "✅ Copié !" : "📋 Kopye Nimewo a"}
+                  {copied === p.method ? "✅ Kopye !" : "📋 Kopye Nimewo a"}
                 </button>
                 <p className="text-white/60 text-xs text-center mt-3">⚡ Aktivasyon garanti an mwens 30 minit</p>
               </div>
@@ -1674,7 +1674,7 @@ function PaymentScreen({ onBack }) {
         <button onClick={() => window.open("https://wa.me/50900000000?text=Bonjou%2C%20mwen%20vle%20aktive%20Gid%20NS4.", "_blank")}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman via WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Konfime Peman sou WhatsApp
         </button>
       </div>
     </div>
@@ -1920,7 +1920,7 @@ function DashboardScreen({ onBack, userCode }) {
         <div className="grid grid-cols-2 gap-3">
           {[
             { label: "Scan Total", val: s.totalScans,    icon: "🔍", color: "#3b82f6" },
-            { label: "Elèves Actifs", val: s.totalStudents, icon: "👥", color: "#22c55e" },
+            { label: "Élèves Actifs", val: s.totalStudents, icon: "👥", color: "#22c55e" },
             { label: "Scan d'aujourd'hui",  val: s.scansToday,    icon: "📅", color: "#f59e0b" },
             { label: "Matières",   val: school.subjects.length, icon: "📚", color: "#a855f7" },
           ].map((item, i) => (
@@ -1981,15 +1981,15 @@ function PartnerScreen({ onBack }) {
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         <div className="rounded-3xl px-6 py-6" style={{ background: "linear-gradient(135deg,#1a1a5e,#2a2a8e)", border: "1px solid #3b82f633" }}>
           <div className="text-5xl mb-4">🏫</div>
-          <h3 className="text-white font-black text-xl mb-2">Ofri Aksè Ilimite a Elèv Ou Yo</h3>
+          <h3 className="text-white font-black text-xl mb-2">Ofri Aksè 24/24, 7/7 a Elèv Ou Yo</h3>
           <p className="text-blue-300 text-sm leading-relaxed">Gid NS4 bay chak elèv yon asistan IA pèsonèl 24h/24 pou prepare egzamen NS4 yo.</p>
         </div>
         {[
-          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire kòd la" },
+          { icon:"✅", title:"Kòd ak Dat Ekspirasyon", desc:"Kontwole dire aksè a" },
           { icon:"🎛️", title:"Quota Modifyab", desc:"Chwazi 3, 5 oswa 10 scan pa jou" },
-          { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv pa kòd" },
-          { icon:"📚", title:"Matyè Seleksyone", desc:"Aktive matyè yo" },
-          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv yo wè pwogresyon yo pa rapò a lòt yo" },
+          { icon:"👥", title:"Limit Elèv", desc:"Defini kantite maksimòm elèv yo pa kòd" },
+          { icon:"📚", title:"Matyè Seleksyone", desc:"Aktivasyon matyè yo" },
+          { icon:"🏆", title:"Klasman Reyèl", desc:"Elèv yo wè pwogresyon yo pa rapò ak lòt yo" },
           { icon:"🔒", title:"Sekirite Maksimòm", desc:"Kle API pwoteje" },
         ].map((f, i) => (
           <div key={i} className="flex gap-4 px-5 py-4 rounded-2xl" style={{ background: "#ffffff08", border: "1px solid #ffffff10" }}>
@@ -2003,7 +2003,7 @@ function PartnerScreen({ onBack }) {
         <button onClick={() => window.open("https://wa.me/50900000000?text=Bonjou%2C%20mwen%20vle%20vin%20patnè%20Gid%20NS4.", "_blank")}
           className="w-full py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3"
           style={{ background: "linear-gradient(135deg,#25d366,#128c7e)" }}>
-          <span style={{ fontSize: 22 }}>💬</span> Kontakte Nou sou WhatsApp
+          <span style={{ fontSize: 22 }}>💬</span> Kontakte nou sou WhatsApp
         </button>
       </div>
     </div>
